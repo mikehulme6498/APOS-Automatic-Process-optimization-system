@@ -1,0 +1,42 @@
+﻿@{
+
+    ViewData["Title"] = "Material Variance Menu";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li>Material Variance Menu</li>
+</ul>
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-box bg-purple">
+                <div class="inner">
+                    <h3> View All Gains / Losses </h3>
+                    <p> View gains and losses for all materials over a set period of time. </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <a asp-area="" asp-controller="MatVar" asp-action="Overview" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h3> View Material Usage </h3>
+                    <p> Full breakdown of a specific material usage. </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <a asp-area="" asp-controller="MatVar" asp-action="MaterialUsage" asp-route-shift="current" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

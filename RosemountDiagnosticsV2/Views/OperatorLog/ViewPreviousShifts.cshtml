@@ -1,0 +1,72 @@
+﻿@model Dictionary<BatchDataAccessLibrary.Models.ShiftLog.OperatorShiftLog, int>
+
+@{
+
+    ViewData["Title"] = "Operator Log - Previous Shifts";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="OperatorLog" asp-action="Index">Operator Log</a></li>
+    <li>Previous Shifts</li>
+</ul>
+
+<br />
+<br />
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr class="text-center">
+            <th width="5%">Date</th>
+            <th width="5%">Shift</th>
+            <th width="5%">Colour</th>
+            <th width="10%">Operators</th>
+            <th width="5%">Batches Made</th>
+            <th width="5%">Totes Rework</th>
+            <th width="55%">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            var totalRework = log.Key.ReworkTotes + log.Key.BigBangReworkTotes;
+
+            <tr class="text-center">
+                <td>@log.Key.Date.ToShortDateString()</td>
+                <td>@log.Key.DaysNights</td>
+                <td class="shiftColour">@log.Key.ShiftColour</td>
+                <td>@log.Key.Operators</td>
+                <td>@log.Value</td>
+                <td>@totalRework</td>
+                <td class="text-left"><a asp-controller="OperatorLog" asp-action="ViewCurrentShift" asp-route-shiftId="@log.Key.OperatorShiftLogId" class="btn btn-primary">View Shift</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <script>
+        $('.shiftColour').each(function () {
+            switch (this.innerText) {
+                case "Green":
+                    this.style = "background-color: #00FF00 !important;";
+                    break;
+                case "Red":
+                    this.style = "background-color: #FF0000 !important;";
+                    break;
+                case "Blue":
+                    this.style = "background-color: #0000FF !important;";
+                    break;
+                case "Orange":
+                    this.style = "background-color: #FFA500 !important;";
+                    break;
+                case "Yellow":
+                    this.style = "background-color: #FFFF00 !important;";
+                    break;
+                default:
+                    break;
+
+            }
+
+        });
+    </script>
+}

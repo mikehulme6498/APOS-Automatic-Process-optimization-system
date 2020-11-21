@@ -1,0 +1,21 @@
+﻿.streamBoxes{
+    margin: 0 auto;
+}
+
+.stream-outline{
+    display:inline-block;
+    margin-left:20px;
+}
+
+#totals-table td:nth-child(odd){
+    text-align:right;
+    padding-right:10px;
+}
+
+#usage-table{
+    margin: 0 auto;
+}
+
+.date-selection{
+    display:inline-block;
+}

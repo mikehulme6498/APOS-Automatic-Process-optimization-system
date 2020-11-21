@@ -1,0 +1,19 @@
+﻿.blue-table tr:nth-child(odd) {
+    background-color: #b8cce4 !important;
+}
+
+.blue-table tr:nth-child(even) {
+    background-color: #dbe5f1 !important;
+}
+
+.blue-table thead td {
+    background-color: #4f81bd !important;
+    
+    color:white;
+}
+
+.blue-table td{
+    font-size:20px;
+}
+
+

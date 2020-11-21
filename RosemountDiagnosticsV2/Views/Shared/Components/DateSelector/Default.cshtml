@@ -1,0 +1,96 @@
+﻿@model RosemountDiagnosticsV2.Models.DateSelectorModal;
+
+<link href="~/css/DatePickerStyleSheet.css" rel="stylesheet" />
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="modal fade" id="dateSelect" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Select Date</h4>
+                            <button class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" asp-for="TimeSet" value="true" />
+                            <div class="radio-toolbar">
+                                <input type="radio" asp-for="TimeFrame" value="year" class="searchByYear" />
+                                <label for="searchByYear">Search By Year</label>
+                                <input type="radio" asp-for="TimeFrame" value="week" class="searchByWeek" />
+                                <label for="searchByYear">Search By Week</label>
+                                <input type="radio" asp-for="TimeFrame" value="dates" class="searchByDates" />
+                                <label for="searchByYear">Search By Specific Date</label>
+                            </div>
+                            <br /><br />
+
+
+                            <div class="form-group select-year text-center">
+                                <label for="Year">Select Year :</label>
+                                <select asp-for="Year" asp-items="@Model.YearsAvailable" class="form-control"> </select>
+
+                            </div>
+                            <div class="form-group select-week">
+                                <label for="Year">Select Year :</label>
+                                <select asp-for="YearForWeek" asp-items="@Model.YearsAvailable" class="form-control what-year-for-week"> </select>
+                                <label for="Week">Select Week :</label>
+                                <select asp-for="Week" asp-items="@Model.WeeksAvailable" class="form-control weekDropDown"> </select>
+                            </div>
+                            <div class="form-group select-dates">
+                                <label for="Year">Select Specific Time Frame :</label><br />
+                                <label for="DateFrom">From :</label><input type="date" asp-for="DateFrom" value="@Model.DateFrom.ToString("yyyy-MM-dd")" class="form-control" />
+                                <label for="DateTo">To :</label><input type="date" asp-for="DateTo" value="@Model.DateTo.ToString("yyyy-MM-dd")" class="form-control" />
+
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="dateSubmitButton">Load</button>
+                                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    ShowHideTimeFrameSelectors();
+    GetWeeksForDropDown(@Model.Year);
+    function ShowHideTimeFrameSelectors() {
+        $('.radio-toolbar input:radio').each(function () {
+
+            if ($(this).is(':checked')) {
+                $('.select-' + this.value).show();
+            }
+            else {
+                $('.select-' + this.value).hide();
+            }
+        });
+    }
+
+    $('.radio-toolbar input:radio').change(function () {
+          ShowHideTimeFrameSelectors();
+    });
+
+    $(".what-year-for-week").change(function () {
+        GetWeeksForDropDown($(this).val());
+    });
+
+    function GetWeeksForDropDown(year) {
+        var url = '@Url.Action("GetWeeksAvailableInYear", "Home")'
+        var weekDropDown = $(".weekDropDown");
+        var selectedYear = year;
+
+        $.getJSON(url, { year: selectedYear }, function (response) {
+            weekDropDown.empty();
+            $.each(response, function (index, week) {
+            weekDropDown.append($('<option></option>').text(week));
+            });
+        });
+    }
+</script>

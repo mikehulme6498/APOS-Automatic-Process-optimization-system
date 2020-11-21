@@ -1,0 +1,290 @@
+﻿@model RosemountDiagnosticsV2.View_Models.Quality.PcsComplianceViewModel
+
+@{
+    ViewData["Title"] = "Weekly PCS Compliance";
+}
+<link href="~/css/Quality/pcs-compliance.css" rel="stylesheet" />
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="~/js/Quality/pcs-compliance-guage-options.js"></script>
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Quality" asp-action="Index">Quality</a></li>
+    <li><a asp-controller="Quality" asp-action="PcsCompliance">Weekly Pcs Compliance</a></li>
+</ul>
+<div class="week-selector text-center">
+
+    <a href='@Url.Action("PcsCompliance", "Quality", new { week = Model.CurrentWeek-1, year = DateTime.Now.Year })'><i class="fas fa-chevron-left"></i></a>
+    Week @Model.CurrentWeek
+    @if (Model.ShouldShowNextWeekLink)
+    {
+        <a href='@Url.Action("PcsCompliance", "Quality", new { week = Model.CurrentWeek + 1, year = DateTime.Now.Year })'><i class="fas fa-chevron-right"></i></a>
+    }
+</div>
+@if (Model.NoReportsThisWeek)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="info-card">
+                <div class="info-card-heading">No Reports this week</div>
+                <div class="info-card-content-alignLeft">There are no reports in the database for this week, Please check the No 4 Making plant server is running</div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="info-card">
+                <div class="info-card-heading">Daily Pcs Compliance %</div>
+                <div class="info-card-content-alignCenter">
+                    <table id="top-compliance-table">
+                        <thead>
+                            <tr>
+                                @foreach (var day in Model.DailyResults)
+                                {
+                                    <td>
+                                        <a href="#@day.Date.DayOfWeek.ToString()">
+                                            <div class="day-name">@day.Date.DayOfWeek.ToString()</div>
+                                            <span class="date">@day.Date.ToShortDateString()</span>
+                                        </a>
+                                    </td>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var day in Model.DailyResults)
+                                {
+                                    <td>
+                                        <percent-guage id="(int)@day.Date.DayOfWeek" percent="@day.PcsCompliancePercentage"></percent-guage>
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="info-card">
+                <button class="accordion info-card-heading"><span class="expand"><i class="fas fa-plus-circle"></i> Rework</span></button>
+                <div class="panel">
+                    <div class="info-card-content">
+                        <br /><br />
+                        <table id="rework-compliance-table" class="table">
+                            <thead>
+                                <tr>
+                                    <td class="rework-recipe"></td>
+                                    @foreach (var day in Model.DailyResults)
+                                    {
+
+                                        <td colspan="2">
+                                            <a href="#@day.Date.DayOfWeek.ToString()">
+                                                <div class="day-name">@day.Date.DayOfWeek.ToString()</div>
+                                                <span class="date">@day.Date.ToShortDateString()</span>
+                                            </a>
+                                        </td>
+                                    }
+                                <tr>
+                                    <td class="rework-recipe">Recipe</td>
+                                    @foreach (var day in Model.DailyResults)
+                                    {
+                                        <td class="rework-table-sub-heading">Batches Made</td>
+                                        <td class="rework-table-sub-heading">Rework Used (Kg)</td>
+                                    }
+                                </tr>
+
+                            </thead>
+                            <tbody>
+
+                                @foreach (var recipeName in Model.RecipesWithRework)
+                                {
+                                    <tr>
+                                        <rework-totals recipe-name="@recipeName" daily-rework-result="@Model.DailyResults"></rework-totals>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Totals</td>
+                                    @foreach (var day in Model.DailyResults)
+                                    {
+                                        <td class="text-center rework-totals">@day.TotalBatchesThatCouldRework</td>
+                                        <td class="text-center rework-totals">@day.TotalReworkUsedForToday Kg</td>
+                                    }
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="info-card">
+                <button class="accordion info-card-heading"><span id="expand"><i class="fas fa-plus-circle"></i> Daily PCS Compliance Scoring table</span></button>
+
+                <div class="panel">
+                    <div class="info-card-content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="pcsDaily" class="table">
+                                        <thead>
+                                            <tr>
+                                                @foreach (var header in Model.DisplayTables.Tables[0].Columns)
+                                                {
+                                                    <td>@header</td>
+                                                }
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (System.Data.DataRow row in Model.DisplayTables.Tables[0].Rows)
+                                            {
+                                                <tr>
+                                                    @foreach (var cell in row.ItemArray)
+                                                    {
+                                                        if (row.ItemArray[0].ToString() == cell.ToString())
+                                                        {
+                                                            <td width="200px" class="table-row-heading">@cell</td>
+                                                        }
+                                                        else if (row.ItemArray[0].ToString() == "PCS Compliance" && cell.ToString() != "PCS Compliance")
+                                                        {
+                                                            <td class="table-figures add-percentage">@cell</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="table-figures">@cell</td>
+                                                        }
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="info-card">
+                <button id="summary" class="accordion info-card-heading"><span class="expand"><i class="fas fa-plus-circle"></i> Daily Summary</span></button>
+                <div class="panel">
+                    <div class="info-card-content-alignCenter">
+                        @foreach (var day in Model.DailyResults)
+                        {
+                            @await Component.InvokeAsync("PcsDailySummary", day);
+                        }
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $('#pcsDaily td').each(function () {
+        if (this.innerText == "non-used") {
+            this.innerText = "N/A";
+        }
+    });
+
+    $('#pcsDaily td').each(function () {
+        if (this.innerText == "2") {
+            this.innerText = "Pass";
+            this.style = "background-color: #77DD77 !important;";
+        }
+    });
+
+    $('#pcsDaily td').each(function () {
+        if (this.innerText == "1") {
+            this.innerText = "Minor Issues"
+            this.style = "background-color: #FDFD96 !important;";
+        }
+    });
+
+    $('#pcsDaily td').each(function () {
+        if (this.innerText == "0") {
+            this.innerText = "Warning";
+            this.style = "background-color: #EA3C53 !important;";
+        }
+    });
+
+    $(document).ready(function () {
+        // Add smooth scrolling to all links
+        $("a").on('click', function (event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+                if (!$("#summary").hasClass("active")) {
+                    $('#summary').click();
+                }
+                // Store hash
+                var hash = this.hash;
+                var topOfPage = $(hash).offset().top - 100;
+                console.log(topOfPage);
+
+                $('html, body').animate({
+                    scrollTop: topOfPage
+                }, 800, function () {
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    //window.location.hash = hash;
+                });
+            } // End if
+        });
+        var acc = document.getElementsByClassName("accordion");
+
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + 500 + "px";
+                }
+            });
+        }
+    });
+</script>
+
+
+
+
+
+

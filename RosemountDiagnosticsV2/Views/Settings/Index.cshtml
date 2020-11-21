@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Settings";
+}
+<link href="~/css/Settings/SettingsIndex.css" rel="stylesheet" />
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+</ul>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card-box bg-blue">
+            <div class="inner">
+                <h3> Quality - Pcs Compliance </h3>
+                <a asp-area="" asp-controller="PcsParameterSettings" asp-action="Index" class="settings-link"> Add / Remove Pcs Compliance parameters</a><br />
+                <a asp-area="" asp-controller="PcsReworkSettings" asp-action="Index" class="settings-link"> Add / Remove recipes With Rework </a><br />
+                <a asp-area="" asp-controller="PcsRecipeLimitsSettings" asp-action="Index" class="settings-link"> Adjust Recipe Limits </a><br />
+                <a asp-area="" asp-controller="PcsScoringSettings" asp-action="Index" class="settings-link"> Adjust Scoring Percentages </a><br />
+                <a asp-area="" asp-controller="PcsTempTargetsSettings" asp-action="Index" class="settings-link"> Adjust Active Drop Temp Targets </a><br />
+            </div>
+            <div class="icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+            @*<a asp-area="" asp-controller="BatchReports" asp-action="ViewAllBatches" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>*@
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-box bg-green">
+            <div class="inner">
+                <h3> Batch Reports </h3>
+                <a asp-area="" asp-controller="UploadData" asp-action="Index" class="settings-link"> Upload New Batch Reports</a><br />
+                <a asp-area="" asp-controller="BatchReportSettings" asp-action="Index" class="settings-link"> Edit Existing Batches</a><br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <div class="icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
+    <div class="col-md-6">
+        <div class="card-box bg-orange">
+            <div class="inner">
+                <h3> Administration </h3>
+                <a asp-area="" asp-controller="Account" asp-action="Register" class="settings-link"> Register New User</a><br />
+                <a asp-area="" asp-controller="Administration" asp-action="ListRoles" class="settings-link"> View List Of Roles</a><br />
+                <a asp-area="" asp-controller="Administration" asp-action="ListUsers" class="settings-link"> View List Of Users</a><br />
+            </div>
+            <div class="icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+        </div>
+    </div>*@
+
+
+        @*<div class="col-md-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h3> Useful Stuff - For Super Mega Admin </h3>
+                    <a asp-area="" asp-controller="OperatorLog" asp-action="AddAllBatchesToShiftLog" class="settings-link"> Add All Batches In System To Shift Log</a><br />
+                    <a asp-area="" asp-controller="OperatorLog" asp-action="RemoveAllShifts" class="settings-link"> Remove All Shifts From Log</a><br />
+                    <a asp-area="" asp-controller="Administration" asp-action="ListUsers" class="settings-link"> View List Of Users</a><br />
+                </div>
+                <div class="icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+            </div>
+ </div>*@
+
+        @if (ViewBag.NewMaterialsFound)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box bg-red">
+                        <div class="inner">
+                            <h3> New Materials Found </h3>
+                            <a asp-area="" asp-controller="MaterialDetailsSettings" asp-action="Index" class="settings-link"> Update New Material Information</a><br />
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         }
+   
+
+

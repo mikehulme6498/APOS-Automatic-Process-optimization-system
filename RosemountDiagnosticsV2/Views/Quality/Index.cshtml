@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Quality - Home";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Quality" asp-action="Index">Quality</a></li>
+</ul>
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-box bg-purple">
+                <div class="inner">
+                    <h3> PCS Compliance </h3>
+                    <p> View daily PCS Compliance for morning meetings </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <a asp-area="" asp-controller="Quality" asp-action="PcsCompliance" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h3> Control Charts </h3>
+                    <p> Check critical control parameter with control charts </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <a asp-area="" asp-controller="Quality" asp-action="ControlCharts" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+﻿.tableItem{
+    color:grey;
+    text-align:right;
+    font-size:medium
+}
+
+.tableData {
+    color: black;
+    font-size:large;
+    text-align:left;
+    padding-left: 10px;
+}

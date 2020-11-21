@@ -1,0 +1,46 @@
+﻿@model BatchDataAccessLibrary.Models.PcsToleranceParameters
+
+
+@{
+    ViewData["Title"] = "Edit PCS Toelrances";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>Edit PCS Tolerance Targets</li>
+</ul>
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Edit PCS tolerance percentages</div>
+            <div class="info-card-content-alignLeft">
+                <form asp-action="EditTolerances">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PcsToleranceParametersId" />
+                    <div class="form-group">
+                        <label asp-for="TolerancePercent" class="control-label"></label>
+                        <input asp-for="TolerancePercent" class="form-control" />
+                        <span asp-validation-for="TolerancePercent" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutOfRangePercent" class="control-label"></label>
+                        <input asp-for="OutOfRangePercent" class="form-control" />
+                        <span asp-validation-for="OutOfRangePercent" class="text-danger"></span>
+                    </div>
+                    <div class="form-group footer-right">
+                        <a asp-action="Index" class="btn btn-info">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

@@ -1,0 +1,48 @@
+﻿@model BatchDataAccessLibrary.Models.PcsReworkParameters
+
+@{
+    ViewData["Title"] = "Edit PCS Rework Parameter";
+}
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="PcsReworkSettings" asp-action="Index">Remove Rework Recipes</a></li>
+    <li>Edit Rework Parameter</li>
+</ul>
+<hr />
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Edit rework amount for @Model.RecipeName</div>
+            <div class="info-card-content-alignLeft">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PcsReworkParametersId" />
+                    <div class="form-group">
+                        <label asp-for="RecipeName" class="control-label"></label>
+                        <input asp-for="RecipeName" class="form-control" disabled/>
+                        <span asp-validation-for="RecipeName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TargetReworkAmount" class="control-label"></label>
+                        <input asp-for="TargetReworkAmount" class="form-control" />
+                        <span asp-validation-for="TargetReworkAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group footer-right">
+                        <a asp-action="Index" class="btn btn-info">Back to List</a>
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+   
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

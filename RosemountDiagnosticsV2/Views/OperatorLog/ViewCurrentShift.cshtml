@@ -1,0 +1,328 @@
+﻿@model RosemountDiagnosticsV2.View_Models.OperatorLog.OperatorLogViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiForg
+
+@{
+
+    ViewData["Title"] = "Operator Log - View Current Shift";
+}
+
+<link href="~/css/OperatorLog/view-current-shift.css" rel="stylesheet" />
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="OperatorLog" asp-action="Index">Operator Log</a></li>
+    <li>Operator Log - Current Shift</li>
+</ul>
+<div hidden id="shiftId">@Model.CurrentShift.OperatorShiftLogId</div>
+<input type="hidden" id="requestVerificationToken" name="requestVerificationToken" value="@antiForg.GetAndStoreTokens(Context).RequestToken" />
+
+@if (Model.NeedOperators)
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="info-card">
+                    <div class="info-card-heading">Select Shift Colour</div>
+                    <div class="info-card-content-alignLeft">
+                        <select id="shiftColorSelector" asp-items="@ViewBag.ShiftColours" class="form-control"></select>
+                    </div>
+                    <div class="info-card-footer footer-no-top-border footer-right">
+                        <a asp-action="Index" asp-controller="OperatorLog" class="btn btn-danger">Cancel</a>
+                        <button class="btn btn-primary" onclick="addShiftColour()">Save</button>
+                        @*<a asp-action="AddOperators" asp-controller="OperatorLog" asp-route-shiftId="@Model.CurrentShift.OperatorShiftLogId" asp-route-shiftColour="Green" class="btn btn-primary">Save</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="info-card-heading">Shift Information</div>
+                    <div class="info-card-content-alignLeft">
+                        <div class="currentShift">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p>Date : @Model.CurrentShift.Date.ToShortDateString()</p>
+                                        <p>Shift Colour : <span class="shiftColour">@Model.CurrentShift.ShiftColour</span></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        Shift : 6-6 @Model.CurrentShift.DaysNights
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span id="operators" class="pad-right">Ops : @Model.CurrentShift.Operators</span><button type="button" data-toggle="modal" data-target="#operatorsEdit"><i class="fas fa-edit"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-lg-3">
+                <div class="info-card min-height-175">
+                    <div class="info-card-heading">Tote Changes - <span id="toteCount">@Model.ToteChanges.Count()</span></div>
+                    <div class="info-card-content-alignLeft">
+                        <table>
+                            <tr>
+                                <td colspan="3" class="pad-right"><select asp-items="@ViewBag.Totes" class="form-control" id="toteSelect"></select></td>
+                                <td><i class="fas fa-plus-circle positive" onclick="addToteToShift()"></i></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-center toteChanges pad-top"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#toteChanges">View Tote Changes</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <div class="info-card min-height-175">
+                    <div class="info-card-heading">Rework - <span id="reworkCount">@Model.TotalReworkToteChanges</span></div>
+                    <div class="info-card-content-alignLeft">
+                        <table>
+                            <tr>
+                                <td class="pad-right">Normal Totes</td>
+                                <td><i class="fas fa-minus-circle negative" id="removeTote" onclick="adjustReworkTote(this.id, '#normal-tote-count')"></i></td>
+                                <td colspan="2"><input type="text" id="normal-tote-count" class="toteCount" value='@Model.CurrentShift.ReworkTotes' disabled /></td>
+                                <td><i class="fas fa-plus-circle positive" id="addTote" onclick="adjustReworkTote(this.id, '#normal-tote-count')"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="pad-right">Big Bang Totes</td>
+                                <td><i class="fas fa-minus-circle negative" id="removeTote" onclick="adjustReworkTote(this.id, '#bb-tote-count')"></i></td>
+                                <td colspan="2"><input type="text" id="bb-tote-count" class="toteCount" value='@Model.CurrentShift.BigBangReworkTotes' disabled /></td>
+                                <td><i class="fas fa-plus-circle positive" id="addTote" onclick="adjustReworkTote(this.id, '#bb-tote-count')"></i></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-3">
+                <div class="info-card min-height-175">
+                    <div class="info-card-heading">Effluent - <span id="effluentStart">@Model.CurrentShift.EffluentAtStartOfShift</span> Kg</div>
+                    <div class="info-card-content-alignLeft">
+                        <table>
+                            <tr>
+                                <td>
+                                    Effluent At Start Of Shift
+                                    <input type="text" id="effluent" value="" />
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="updateEffluent()">Update Effluent</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-2">
+                <div class="info-card min-height-175">
+                    <div class="info-card-heading">Misc</div>
+                    <div class="info-card-content-alignLeft">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#goodStockToWaste">Add Good Stock To Waste</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="info-card">
+                    <div class="info-card-heading">Batches Made - @Model.BatchReports.Count()</div>
+                    <div class="info-card-content-alignLeft">
+                        <table class="table table-striped text-center" id="batch-report-table">
+                            <thead>
+                                <tr>
+                                    <td>Start Time</td>
+                                    <td>Wash</td>
+                                    <td>Stream</td>
+                                    <td>Recipe</td>
+                                    <td>Batch No</td>
+                                    <td>Visco</td>
+                                    <td>pH</td>
+                                    <td>Weight</td>
+                                    <td>Wash</td>
+                                    <td>Stock Tank</td>
+                                    <td>Rework</td>
+                                </tr>
+                            </thead>
+
+                            @foreach (var batch in Model.BatchReports)
+                            {
+                                <tr class="text-center">
+                                    <td>@batch.Report.StartTime</td>
+                                    <td><input type="checkbox" data-batchId="@batch.Report.BatchReportId" data-shiftId='@Model.CurrentShift.OperatorShiftLogId' data-vessel-type="stream" data-vessel-name="@batch.Report.StreamName" class="form-check" checked="@batch.StreamCip" onclick="updateBatchCip(this)" /></td>
+                                    <td>@batch.Report.StreamName.Substring(batch.Report.StreamName.IndexOf("m") + 1)</td>
+                                    <td>@batch.Report.Recipe</td>
+                                    <td>@batch.Report.Campaign-@batch.Report.BatchNo</td>
+                                    <td>@batch.Report.Visco</td>
+                                    <td>@batch.Report.Ph</td>
+                                    <td>@batch.Report.GetTotalBatchWeightInKg() Kg</td>
+                                    <td><input type="checkbox" data-batchId="@batch.Report.BatchReportId" data-shiftId='@Model.CurrentShift.OperatorShiftLogId' data-vessel-type="stocktank" data-vessel-name="@batch.Report.AllocatedTo" class="form-check" checked="@batch.StockTankCip" onclick="updateBatchCip(this)" />
+                                    <td>@batch.Report.AllocatedTo</td>
+                                    <td>@batch.Report.GetReworkAmount() Kg</td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="test"></div>
+    <div id="goodStockToWaste" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                    <h4 class="modal-title">Add Good Stock To Waste</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="goodStockForm">
+
+                        <input type="hidden" asp-for="@Model.GoodStockToWaste.Date" value="@Model.CurrentShift.Date" />
+                        <input type="hidden" asp-for="@Model.GoodStockToWaste.ShiftLogId" value="@Model.CurrentShift.OperatorShiftLogId" />
+                        <div class="form-group row">
+                            <label asp-for="@Model.GoodStockToWaste.RecipeName" class="col-md-4 col-form-label"></label>
+                            <div class="col-md-8">
+                                <select asp-for="@Model.GoodStockToWaste.RecipeName" asp-items="@ViewBag.Recipes" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="@Model.GoodStockToWaste.Amount" class="col-md-4 col-form-label"></label>
+                            <div class="col-md-8">
+                                <input asp-for="@Model.GoodStockToWaste.Amount" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="@Model.GoodStockToWaste.Reason" class="col-md-4 col-form-label"></label>
+                            <div class="col-md-8">
+                                <select asp-for="@Model.GoodStockToWaste.Reason" asp-items="Html.GetEnumSelectList<BatchDataAccessLibrary.Enums.WasteReason>()" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="@Model.GoodStockToWaste.Comment" class="col-md-4 col-form-label"></label>
+                            <div class="col-md-8">
+                                <textarea asp-for="@Model.GoodStockToWaste.Comment" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addGoodStock()">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toteChanges" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                    <h4 class="modal-title">Totes Changed this shift</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="toteList">@await Component.InvokeAsync("ListToteChanges", new { shiftId = Model.CurrentShift.OperatorShiftLogId })</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="operatorsEdit" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                    <h4 class="modal-title">Edit Operators</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="operatorList">@await Component.InvokeAsync("ListOperators", new { shiftId = Model.CurrentShift.OperatorShiftLogId })</div>
+                    <input type="text" id="newOperator" placeholder="Enter Operator Name" /><button type="button" class="btn btn-success btn-sm" onclick="addOperator()">Add</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-success" id="success-alert">
+        <strong>Success! </strong><span id="successMessage">Success.</span>
+    </div>
+
+    <div class="alert alert-danger" id="fail-alert">
+        <strong>Failed! </strong><span id="failMessage">Something Went Wrong.</span>
+    </div>
+
+}
+
+<script>
+    function addShiftColour() {
+    var shiftId = $('#shiftId').html();
+    var shiftColour = $('#shiftColorSelector option:selected').val();
+        console.log('@Url.Action("ViewCurrentShift", "OperatorLog")?shiftId=' + shiftId);
+    $.post('/OperatorLog/AddOperators', { shiftId: shiftId, shiftColour: shiftColour },
+        function (data) {
+            location.reload();
+        }).fail(function () {
+                ShowFailedAlert("Something went wrong");
+            });
+
+}
+</script>
+
+@section scripts{
+    <script>
+        $('.shiftColour').each(function () {
+            switch (this.innerText) {
+                case "Green":
+                    this.style = "background-color: #00FF00 !important;";
+                    break;
+                case "Red":
+                    this.style = "background-color: #FF0000 !important;";
+                    break;
+                case "Blue":
+                    this.style = "background-color: #0000FF !important;";
+                    break;
+                case "Orange":
+                    this.style = "background-color: #FFA500 !important;";
+                    break;
+                case "Yellow":
+                    this.style = "background-color: #FFFF00 !important;";
+                    break;
+                default:
+                    break;
+
+            }
+
+        });
+
+        $('#batch-report-table').DataTable({
+            //"pageLength": 50,
+            "paging": false,
+            "scrollY": true
+        });
+
+    </script>
+}
+<script src="~/js/OperatorLog/view-current-shift.js"></script>

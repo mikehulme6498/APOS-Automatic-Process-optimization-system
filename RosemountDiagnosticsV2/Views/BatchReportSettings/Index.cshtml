@@ -1,0 +1,179 @@
+﻿@model IEnumerable<BatchDataAccessLibrary.Models.BatchReport>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StreamName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Campaign)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BatchNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeekNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MakingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QATime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreQaTemp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Visco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ph)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appearance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisualColour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeasuredColour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Odour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OverallQAStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockTankAllocationTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllocatedTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DropTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalRecipeWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalActualWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VesselWeightIncrease)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipeType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewMakeTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recipe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Campaign)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatchNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeekNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QATime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreQaTemp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Visco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ph)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Appearance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisualColour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeasuredColour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Odour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverallQAStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockTankAllocationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllocatedTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DropTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalRecipeWeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalActualWeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VesselWeightIncrease)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipeType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewMakeTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BatchReportId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BatchReportId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BatchReportId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

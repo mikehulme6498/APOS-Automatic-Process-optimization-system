@@ -1,0 +1,134 @@
+﻿@model RosemountDiagnosticsV2.View_Models.MatVarOverviewViewModel
+
+@{
+    ViewData["Title"] = "Mat Var Overview";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="MatVar" asp-action="Index">Material Variance Menu</a></li>
+    <li>Material Variance Overview</li>
+
+</ul>
+
+<link href="~/css/MatVarOverview.css" rel="stylesheet" />
+
+<div id="time-selector" class="pull-right">
+    <h4>
+        Time Period : @Model.DateSelectorModal.TimeFrameTitle &nbsp;
+        <button class="btn btn-primary btn-sm" data-target="#dateSelect" data-toggle="modal">Change</button>
+    </h4>
+</div>
+
+
+
+
+<form asp-action="Overview" method="post" id="dateSelection">
+
+    @await Component.InvokeAsync("DateSelector", Model.DateSelectorModal)
+</form>
+
+@if (Model.Gains.Count == 0 && Model.Losses.Count == 0)
+{
+    <br />
+    <div class="info-card">
+        <div class="info-card-heading">No batches found</div>
+        <div class="info-card-content-alignCenter">
+            <h2>There is no data for the time period specified. Please select another time period.</h2>
+        </div>
+    </div>
+
+}
+else
+{
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="info-card mh-400">
+                    <div class="info-card-heading">Gains</div>
+                    <div class="info-card-content-alignLeft info-card-overflowY mh-350" id="thin-scroller">
+                        <table class="item-table">
+                            <tbody>
+                                @foreach (var gain in @Model.Gains)
+                                {
+                                    <item-box name="@gain.Name" product-code=@gain.ProductCode short-name="@gain.ShortName" gain-loss-euro=@gain.Cost gain-loss-kg=@gain.TotalKg cost-per-ton="@gain.CostPerTon"></item-box>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="info-card mh-400">
+                    <div class="info-card-heading">Giveaway</div>
+                    <div class="info-card-content-alignLeft info-card-overflowY mh-350" id="thin-scroller">
+                        <table class="item-table">
+                            <tbody>
+                                @foreach (var loss in @Model.Losses)
+                                {
+                                    <item-box name="@loss.Name" product-code=@loss.ProductCode short-name="@loss.ShortName" gain-loss-euro=@loss.Cost gain-loss-kg=@loss.TotalKg cost-per-ton="@loss.CostPerTon"></item-box>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="info-card mh-400">
+                    <div class="info-card-heading">Gains / Loss For Period</div>
+                    <div class="info-card-content-alignLeft mh-350">
+                        <table id="totalGainLossTable">
+                            <tbody>
+                                <tr>
+                                    <td><h3>Giveaway :&nbsp;&nbsp;</h3></td>
+                                    <td><h3><number-formater value="@Model.TotalLossForPeriod" suffix="€" reverse="true"></number-formater> </h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Gain :&nbsp;&nbsp;</h3></td>
+                                    <td><h3><number-formater value="@Model.TotalGainForPeriod" suffix="€" reverse="true"></number-formater> </h3></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="matvar-footer">Total Cost : <number-formater value="@Model.CombinedTotal" suffix="€" reverse="true"></number-formater></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="info-card">
+                    <div class="info-card-heading">Accumulative Costs This Years</div>
+
+                    <div class="costs-chart">
+                        @await Component.InvokeAsync("MatVarWeeklyGiveawayChart", new { dateSelectorModal = Model.DateSelectorModal });
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+@section Scripts{
+    <script src="~/js/date-selector-post.js"></script>
+    <script>
+        $('.search-icon').click(function () {
+            var productName = $(this).attr('id');
+            var extraParams = [];
+            extraParams.push("name=" + productName);
+            postDateSelector("/MatVar/MaterialUsageSingle", extraParams);
+        });
+
+
+        $("#dateSubmitButton").click(function () {
+            $('#dateSelection').submit();
+        });
+    </script>
+}
+

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<BatchDataAccessLibrary.Models.PcsTempTargets>
+
+@{
+    ViewData["Title"] = "View Temperature Target";
+}
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>Temperature Targets</li>
+</ul>
+
+
+<div class="info-card">
+    <div class="info-card-heading">Recipe active drop temperature settings</div>
+    <div class="info-card-content-alignLeft">
+        <div class="alert alert-info">
+            <p>These settings were taken from Rosemount. Currently only the target value is used by the system.<p>
+            <p>It is used on the control charts for active temp drops for what ever material is being shown.</p>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RecipeType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Recipe)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Target)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UpperLimit)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LowerLimit)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RecipeType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recipe)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Target)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpperLimit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LowerLimit)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.PcsTempTargetsId" class="btn btn-sm btn-info">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.PcsTempTargetsId" class=" btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="footer-right">
+            <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus-circle"></i><span class="font-18"> Add New Recipe</span></a>
+        </div>
+    </div>
+</div>

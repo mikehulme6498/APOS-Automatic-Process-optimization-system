@@ -1,0 +1,147 @@
+﻿@* BATCHES MADE VIEW COMPONENT *@
+
+@model IEnumerable<RosemountDiagnosticsV2.View_Models.BatchesMadePerWeek>
+
+@{
+    Layout = null;
+}
+<link href="~/css/BatchesMadeViewComponentStyles.css" rel="stylesheet" />
+
+@* HIDDEN FIELDS TO UPDATE CHARTS *@
+<div hidden id="batches-made-weekNo"></div>
+
+@* END OF HIDDEN FIELDS *@
+<div class="row">
+    <div class="col-md-12">
+        <h4>Current Week : @ViewData["currentWeek"]</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="tableItem">Total Batches this Week : </td>
+                    <td id="totalThisWeek" class="tableData">@Model.Where(x => x.WeekNo == Convert.ToInt32(ViewData["currentWeek"])).Select(x => x.BatchesMade).FirstOrDefault()</td>
+                </tr>
+                <tr>
+                    <td class="tableItem">Conc Batches : </td>
+                    <td id="concBatchCount" class="tableData">@Model.Where(x => x.WeekNo == Convert.ToInt32(ViewData["currentWeek"])).Select(x => x.ConcBatchesCount).FirstOrDefault()</td>
+                </tr>
+                <tr>
+                    <td class="tableItem">Big Bang Batches : </td>
+                    <td id="bigBangbatchCount" class="tableData">@Model.Where(x => x.WeekNo == Convert.ToInt32(ViewData["currentWeek"])).Select(x => x.BigBangBatchesCount).FirstOrDefault()</td>
+                </tr>
+                <tr>
+                    <td class="tableItem">Regular Batches : </td>
+                    <td id="regBatchCount" class="tableData">@Model.Where(x => x.WeekNo == Convert.ToInt32(ViewData["currentWeek"])).Select(x => x.RegBatchesCount).FirstOrDefault()</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-6">
+        <canvas id="weeklyBatchCountChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script>
+
+    var total = document.getElementById("totalThisWeek");
+    var ctx = document.getElementById('weeklyBatchCountChart').getContext('2d');
+    var weeks = [];
+    var count = [];
+
+    function AddObserver() {
+
+        var target = document.querySelector('#totalThisWeek');
+        console.log(target);
+        var observer = new MutationObserver(function (mutations) {
+            console.log(mutations);
+            console.log("something changed");
+            UpdateChart();
+        });
+
+        var config = { attributes: true, childList: true, charactorData: true };
+        observer.observe(target, config);
+    }
+    AddObserver();
+     @foreach (var week in @Model)
+        {
+            @:weeks.push(@week.WeekNo)
+            @:count.push(@week.BatchesMade)
+        }
+
+    var weeklyBatchesChart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: weeks,
+            datasets: [{
+                label: 'Batches Made Per Week',
+                backgroundColor: 'rgb(255, 0, 0)',
+                borderColor: 'rgb(255, 99, 132)',
+                fill: false,
+                display: true,
+                data: count
+            }]
+        },
+        // Configuration options go here
+        options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return Number(tooltipItem.yLabel) + " Batches Made";
+                    }
+                }
+         },
+         scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Batches Made'
+              }
+                }],
+              xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Week No'
+              }
+            }]
+          } }
+    });
+
+    function UpdateChart() {
+        var weeklycount = [];
+        $.ajax({
+            url: 'https://localhost:44383/batchinfo/GetBatchesPerWeek?year=2020', // TODO : Change the year to be the current year
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textstatus, xhr) {
+                for (var key in data) {
+                    weeklycount.push(data[key]);
+                }
+                weeklyBatchesChart.data.datasets[0].data = weeklycount;
+                weeklyBatchesChart.update();
+            },
+            error: function (xhr, textstatus, errorthrown) {
+                console.log("Error in monthly count call");
+            }
+        });
+
+    }
+
+    function addData(chart, label, data) {
+        
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
+
+
+</script>

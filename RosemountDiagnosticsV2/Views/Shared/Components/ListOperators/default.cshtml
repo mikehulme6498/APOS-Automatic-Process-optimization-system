@@ -1,0 +1,6 @@
+﻿@model List<string>
+
+@foreach (var name in Model)
+{
+    <p>@name <i class="fas fa-times-circle negative" onclick="removeOperator('@name')"></i></p>
+}

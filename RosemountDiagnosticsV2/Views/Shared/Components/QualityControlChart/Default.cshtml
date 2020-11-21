@@ -1,0 +1,283 @@
+﻿@model RosemountDiagnosticsV2.View_Models.QualityControlChartViewModel
+
+@foreach (var chart in Model.ChartData)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="info-card">
+                <div class="info-card-heading">@chart.Title</div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="@chart.ChartId" style="height:auto;width:90%;margin:1em auto;"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-box @chart.CpkBgColour">
+                            <div class="inner">
+                                <h3> Cpk Value : @chart.CpkValue </h3>
+                                <p> @chart.CpkJudgement </p>
+                            </div>
+                        </div>
+                        <div class="card-box @chart.CpkBgColour">
+                            <div class="inner">
+                                <h4><b><u>Action to be taken</u></b></h4>
+                                <p>  @chart.CpkAction </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<script>
+
+@foreach (var chart in Model.ChartData)
+{
+    @:var viscoData = [];
+    @:var xAxisLabels = ['@Html.Raw(string.Join("', '", @chart.XAxisLabels))'];
+
+    @foreach (var value in chart.Values)
+    {
+        @:viscoData.push(@value);
+    }
+
+    @:var chartData = {
+        @:values: viscoData,
+        @:target: @chart.Target,
+        @:labels: xAxisLabels,
+        @:min: @chart.Min,
+        @:max: @chart.Max,
+        @:title: '@chart.Title',
+        @:seriesName: '@chart.SeriesName',
+        @:YaxisSuffix: '@chart.YAxisSuffix',
+        @:chartName: '@chart.ChartId'
+    @:}
+
+    @:createChart(chartData);
+    @:viscoData = [];
+    @:xAxisLabels = [];
+    @:chartData = "";
+}
+
+    function createChart(chartData) {
+        // Need to get lowest value and highest value then created a loop to complete the y axis
+
+        var highestNumber = Math.ceil(Math.max(...chartData.values) / 5) * 5;
+        var lowestNumber = Math.floor(Math.min(...chartData.values) / 5) * 5;
+
+        //var highestNumber = Math.max(...viscoData) / 5 * 5;
+        //var lowestNumber = Math.min(...viscoData) / 5 * 5;
+
+        console.log("Highest " + highestNumber);
+        console.log("Lowest" + lowestNumber);
+        var yAxisRange = [];
+
+
+        var spreadOfYAxisData = chartData.max - chartData.min;
+
+        spreadOfYAxisData > 1 ? SetYaxisForLargerData() : SetYaxisForSmallerData();
+
+
+        console.log("YAxis : " + JSON.stringify(yAxisRange));
+        console.log("values : " + JSON.stringify(chartData.values));
+
+        var bandWidth = (25 / 100) * (chartData.max - chartData.min) / 2;
+        var goodBand = (75 / 100) * (chartData.max - chartData.min) / 2;
+
+        console.log("Warning band = " + bandWidth);
+        console.log("Good band = " + goodBand);
+
+
+        function SetYaxisForLargerData() {
+            for (i = lowestNumber - 10; i <= highestNumber + 10; i += 2) {
+                yAxisRange.push(i);
+            }
+        }
+
+        function SetYaxisForSmallerData() {
+            for (i = lowestNumber - 1; i <= highestNumber + 1; i += 0.1) {
+                var roundedToOneDecimalPlace = Math.round(i * 10) / 10;
+                yAxisRange.push(roundedToOneDecimalPlace);
+            }
+        }
+
+
+        var chart;
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: chartData.chartName,
+                defaultSeriesType: 'line',
+                marginRight: 25,
+                marginLeft: 60,
+                backgroundColor: '#eee',
+                borderWidth: 1,
+                borderColor: '#ccc',
+                plotBackgroundColor: '#fff',
+                plotBorderWidth: 1,
+                plotBorderColor: '#ccc',
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: chartData.title,
+            },
+            subtitle: {
+                text: 'Upper: ' + chartData.max + " " + chartData.YaxisSuffix + " Min: " + chartData.min + " " + chartData.YaxisSuffix + " Target: " + chartData.target + " " + chartData.YaxisSuffix,
+            },
+            tooltip: {
+                borderWidth: 1,
+                valueSuffix: chartData.YAxisSuffix,
+                //formatter: function () {
+                //    if (this.point.error) {
+                //        var errorText = '<b>Flag: </b>' + this.point.error;
+                //    }
+                //    else {
+                //        var errorText = '';
+                //    }
+                //    return '<b>' + this.series.name + '</b>
+                //  <br/> ' + this.x + ': ' + this.y + 'days' + '<br /> ' + errorText;
+                //}
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    shadow: false,
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineWidth: 1
+                        }
+                    },
+                    marker: {
+                        enabled: true,
+                        symbol: 'circle',
+                        radius: 2,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    },
+                }
+            },
+            xAxis: {
+                lineWidth: 0,
+                tickColor: '#999',
+                categories: chartData.labels,
+                labels: {
+                    //format: testlabels,
+                    events: {
+                        click: function () {
+                            alert(this);
+                        }
+                    }
+                },
+
+
+            },
+            yAxis: {
+
+                tickPositions: chartData.yAxisRange,
+                plotBands: [
+                    {
+                        from: chartData.max,
+                        to: chartData.max + bandWidth,
+                        color: 'rgba(255, 0, 0, .2)',
+                        label: {
+                            text: '', // UPPER BAD
+                            style: {
+                                color: '#606060'
+                            }
+                        }
+                    },
+                    {
+                        from: chartData.target + goodBand,
+                        to: chartData.max,
+                        color: 'rgba(255, 255, 0, .2)',
+                        label: {
+                            text: '', // UPPER WARNING
+                            style: {
+                                color: '#606060'
+                            }
+                        }
+                    },
+                    {
+                        from: chartData.target - goodBand,     //target - 7
+                        to: chartData.target + goodBand,       // target + 7
+                        color: 'rgba(0, 230, 64, .2)',
+                        label: {
+                            text: '', // GOOD
+                            style: {
+                                color: '#606060'
+                            }
+                        }
+                    },
+                    {
+                        from: chartData.target,
+                        to: chartData.target,
+                        color: 'rgba(0, 230, 64, 1)',
+                        label: {
+                            text: '', // TARGET LINE
+                            style: {
+                                color: '#606060'
+                            }
+                        }
+                    },
+                    {
+                        from: chartData.target - goodBand,
+                        to: chartData.min,
+                        color: 'rgba(255, 255, 0, .2)',
+                        label: {
+                            text: '', // LOWER WARNING
+                            style: {
+                                color: '#606060'
+                            }
+                        }
+                    },
+
+                    {
+                        from: chartData.min,
+                        to: chartData.min - bandWidth,
+                        color: 'rgba(255, 0, 0, .2)',
+                        label: {
+                            text: '', // LOWER BAD
+                            style: {
+                                color: '#606060'
+                            }
+                        }
+                    },
+
+                ],
+
+                title: { text: chartData.seriesName },
+                lineWidth: 0,
+                gridLineWidth: 0,
+                gridLineColor: 'rgba(24,90,169,.1)',
+                lineWidth: 0,
+                startOnTick: false,
+                endOnTick: false,
+                minPadding: 0,
+                maxPadding: 0,
+                min: chartData.min - goodBand,
+                max: chartData.max + goodBand,
+            },
+            series: [{
+                name: 'Visco',
+                data: chartData.values,
+                //{ y: 29, error: '4 or more consecutive points below 1 sigma of mean', marker: { symbol: 'diamond', fillColor: '#f00', lineColor: '#f00', radius: 4, states: { hover: { fillColor: '#f00', lineColor: '#f00', radius: 5 } } } },
+                //30, 28, 30, 34,
+                //{ y: 36, error: '9 or more consecutive points below mean', marker: { symbol: 'diamond', fillColor: '#f00', lineColor: '#f00', radius: 4, states: { hover: { fillColor: '#f00', lineColor: '#f00', radius: 5 } } } },
+                //{ y: 30, error: '9 or more consecutive points below mean', marker: { symbol: 'diamond', fillColor: '#f00', lineColor: '#f00', radius: 4, states: { hover: { fillColor: '#f00', lineColor: '#f00', radius: 5 } } } } /*,38, 36, 29, 37, 34, 34, 29, 39, 31, 35, 37, 50, 35, 42, 46, 38, 35, 50, 35, 35, 36, 36, 30, 34, 38, 35, 42, 46*/
+
+            }]
+        });
+    }
+
+
+</script>

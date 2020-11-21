@@ -1,0 +1,104 @@
+﻿@model RosemountDiagnosticsV2.View_Models.Quality.PcsScoringSettingsViewModel
+
+@{
+    ViewData["Title"] = "PCS Scoring Parameters";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>View Pcs Scoring Targets</li>
+</ul>
+
+<div class="row">    
+    <div class="col-md-6">
+        <div class="info-card">
+            <div class="info-card-heading">Scoring Settings</div>
+            <br />
+            <div class="alert alert-info" role="alert">
+                <u><b>Scoring Information</b></u>
+                <ul>
+                    <li>For a Score of 2 the amount of checks in tolerance must be above this percentage.</li>
+                    <li>For a Score of 1 it must be above this pecentage.</li>
+                    <li>Anything else is a score of 0.</li>
+                </ul>
+            </div>
+            <div class="info-card-content-alignLeft">
+                <table class="table" width="80%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ScoringParams.Score2Target)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ScoringParams.Score1Lower)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="font-22">
+                            <td>
+                                @Html.DisplayFor(model => model.ScoringParams.Score2Target)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.ScoringParams.Score1Lower)
+                            </td>
+                            <td>
+                                <a asp-action="EditPcsScoring" asp-route-id="@Model.ScoringParams.PcsScoringId" class="btn btn-info">Edit</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="info-card">
+            <div class="info-card-heading">Tolerance Settings</div>
+            <br />
+            <div class="alert alert-info" role="alert">
+                <u><b>Tolerance Information</b></u>
+                <ul>
+                    <li>Tolerance is the percenatge which is related to scoring targets</li>
+                    <li>Out of range is the percentage which scores 0 if one is above this</li>
+                </ul>
+                <br />
+            </div>
+            <div class="info-card-content-alignLeft">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ToleranceParams.TolerancePercent)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ToleranceParams.OutOfRangePercent)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="font-22">
+                            <td>
+                                @Html.DisplayFor(model => model.ToleranceParams.TolerancePercent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.ToleranceParams.OutOfRangePercent)
+                            </td>
+                            <td>
+                                <a asp-action="EditTolerances" asp-route-id="@Model.ToleranceParams.PcsToleranceParametersId" class="btn btn-info">Edit</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿.blue-table > tbody > tr:nth-child(even) {
+    background-color: #B8CCE4;
+}
+
+.blue-table > tbody > tr:nth-child(odd) {
+    background-color: #DBE5F0;
+}
+
+.blue-table > thead > tr {
+    background-color: #4F81BD;
+    font-weight:bold;
+    font-size:medium;
+    color:white;
+}
+
+.blue-table td{
+    text-align:center;
+}
+
+#usage-table{
+    margin: 0 auto;
+}

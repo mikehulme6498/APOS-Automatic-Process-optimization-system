@@ -1,0 +1,50 @@
+﻿@model BatchDataAccessLibrary.Models.PcsReworkParameters
+
+@{
+    ViewData["Title"] = "New PCS Rework Parameter";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="PcsReworkSettings" asp-action="Index">Add / Remove Rework Recipes</a></li>
+    <li>Add New Rework Parameter</li>
+</ul>
+
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Add new recipe with rework</div>
+            <div class="info-card-content-alignLeft">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="RecipeName" class="control-label"></label>
+                        <select asp-for="RecipeName" asp-items="@ViewBag.Recipes" class="form-control"></select>
+                        @*<input asp-for="RecipeName" class="form-control" />*@
+                        <span asp-validation-for="RecipeName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TargetReworkAmount" class="control-label"></label>
+                        <input asp-for="TargetReworkAmount" class="form-control" />
+                        <span asp-validation-for="TargetReworkAmount" class="text-danger"></span>
+                    </div>
+                    <div class="footer-right">
+                        <div class="form-group">
+                            <a asp-action="Index" class="btn btn-info">Back to List</a>
+                            <input type="submit" value="Create" class="btn btn-success" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

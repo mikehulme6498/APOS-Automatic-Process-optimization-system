@@ -1,0 +1,69 @@
+﻿
+@model List<BatchDataAccessLibrary.Models.BatchReport>
+@{
+
+    ViewData["Title"] = "View All Batches";
+}
+<link href="~/css/Settings/blue-table.css" rel="stylesheet" />
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li>View all batches</li>
+</ul>
+<br />
+@if (@Model != null)
+{
+<div class="container-fluid">
+    <div class="info-card">
+        <div class="info-card-heading">View all batch reports</div>
+        <div class="info-card-content-alignLeft">
+            <table class="table blue-table" id="batchTable">
+                <thead>
+                    <tr>
+                        <td>Actions</td>
+                        <td>Week</td>
+                        <td>Start Time</td>
+                        <td>Campaign</td>
+                        <td>Recipe</td>
+                        <td>Make Time</td>
+                        @*<td>New Make Time</td>*@
+                        <td>Visco</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var report in Model)
+                    {
+                        var id = "viewBatch" + report.BatchReportId;
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-info btn-xs" onclick="location.href='@Url.Action("ViewSingleBatch", "BatchReports", new { batchId = @report.BatchReportId, year = report.StartTime.Year })'" id=@id>View</button>
+                            </td>
+                            <td>@report.WeekNo</td>
+                            <td>@report.StartTime</td>
+                            <td>@report.Campaign-@report.BatchNo</td>
+                            <td>@report.Recipe</td>
+                            <td>@report.MakingTime</td>
+                            @*<td>@report.NewMakeTime</td>*@
+                            <td>@report.Visco</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+}
+else
+{
+    <h1>No Batch Data Was Found</h1>
+}
+
+@section scripts
+{
+    <script>
+        $('#batchTable').DataTable({
+            "iDisplayLength": 25
+        });
+    </script>
+}

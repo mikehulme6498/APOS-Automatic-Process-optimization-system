@@ -1,0 +1,42 @@
+﻿@{
+
+    ViewData["Title"] = "Operator Log";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="OperatorLog" asp-action="Index">Operator Log</a></li>
+</ul>
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-box bg-purple">
+                <div class="inner">
+                    <h3> Previous Shifts </h3>
+                    <p> View previous shifts </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <a asp-area="" asp-controller="OperatorLog" asp-action="ViewPreviousShifts" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h3> Current Shift </h3>
+                    <p> View / Edit Current shift </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <a asp-area="" asp-controller="OperatorLog" asp-action="ViewCurrentShift" asp-route-shift="current" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

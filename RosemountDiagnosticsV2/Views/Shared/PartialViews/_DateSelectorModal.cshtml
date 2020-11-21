@@ -1,0 +1,56 @@
+﻿@model RosemountDiagnosticsV2.Models.DateSelectorModal;
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="modal fade" id="dateSelect" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Select Date</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="radio-toolbar">
+                                <input type="radio" asp-for="TimeFrame" value="year" class="searchByYear" checked="checked" />
+                                <label for="searchByYear">Search By Year</label>
+                                <input type="radio" asp-for="TimeFrame" value="week" class="searchByWeek" />
+                                <label for="searchByYear">Search By Week</label>
+                                <input type="radio" asp-for="TimeFrame" value="dates" class="searchByDates" />
+                                <label for="searchByYear">Search By Specific Date</label>
+                            </div>
+                            <br /><br />
+
+                            
+                            <div class="form-group select-year text-center">
+                                <label for="Year">Select Year :</label>
+                                <select asp-for="Year" asp-items="@Model.YearsAvailable" class="form-control"> </select>
+
+                            </div>
+                            <div class="form-group select-week">
+                                <label for="Year">Select Year :</label>
+                                <select asp-for="YearForWeek" asp-items="@Model.YearsAvailable" class="form-control what-year-for-week"> </select>
+                                <label for="Week">Select Week :</label>
+                                <select asp-for="Week" asp-items="@Model.WeeksAvailable" class="form-control weekDropDown"> </select>
+                            </div>
+                            <div class="form-group select-dates">
+                                <label for="Year">Select Specific Time Frame :</label><br />
+                                <label for="DateFrom">From :</label><input type="date" asp-for="DateFrom" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                                <label for="DateTo">To :</label><input type="date" asp-for="DateTo" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <input type="submit" value="Load" class="btn btn-primary" />
+                                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

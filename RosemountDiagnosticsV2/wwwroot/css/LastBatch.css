@@ -1,0 +1,51 @@
+﻿.pad-left-10{
+    padding-left:10px !important;
+}
+
+.batchRecipe{
+    color:red;
+}
+
+.last-batch-icon{
+    color:green;
+    font-size:30px;
+}
+
+.recipe-title{
+    font-size:30px;
+    font-family:Arial, Helvetica, sans-serif;
+    
+}
+.recipe-number{
+    
+}
+.recipe-time::after{
+    content: " Minutes";
+}
+
+.recipe-details-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.recipe-details-info{
+    color:darkgrey;
+    font-size:30px;
+}
+
+#lastbatch-matvar::after {
+    content: " €";
+}
+.recipe-details-subheading{
+    font-size:15px;
+}
+
+.grow-shrink{
+animation-name:grow-shrink;
+animation-duration:1s;
+}
+
+@keyframes grow-shrink{
+    from {transform:scale(1.5);}
+    to{transform:scale(1);}
+}

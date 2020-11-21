@@ -1,0 +1,9 @@
+﻿@model List<string>
+
+<ul>
+    @foreach (var tote in Model)
+    {
+    <li><i class="fas fa-times-circle negative" onclick="removeTote('@tote')"></i> @tote </li>
+    }
+
+</ul>

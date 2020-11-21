@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BatchDataAccessLibrary.Models.PcsReworkParameters>
+
+@{
+    ViewData["Title"] = "PCS Rework Parameters";
+}
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>Add / Remove Rework Parameter</li>
+</ul>
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="info-card">
+            <div class="info-card-heading">Current recipes with rework in Pcs compliance check</div>
+            <div class="info-card-content-alignLeft">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RecipeName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TargetReworkAmount)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RecipeName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TargetReworkAmount)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.PcsReworkParametersId" class="btn btn-sm btn-info">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.PcsReworkParametersId" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="footer-right">
+                    <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus-circle"></i><span class="font-18"> New Recipe To Check</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

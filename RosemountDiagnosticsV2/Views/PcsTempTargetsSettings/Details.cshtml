@@ -1,0 +1,54 @@
+﻿@model BatchDataAccessLibrary.Models.PcsTempTargets
+
+@{
+    ViewData["Title"] = "PCS Temperature Target Details";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="PcsTempTargetsSettings" asp-action="Index">View Temp Targets</a></li>
+    <li>Temperature targets details</li>
+</ul>
+
+<div>
+  
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipeType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RecipeType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Recipe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Recipe)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Target)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Target)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpperLimit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpperLimit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LowerLimit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LowerLimit)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PcsTempTargetsId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

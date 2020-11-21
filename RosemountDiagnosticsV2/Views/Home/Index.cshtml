@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = await Component.InvokeAsync("ApplicationTitle");
+}
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">You are viewing home</a></li>
+</ul>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-box bg-purple">
+                <div class="inner">
+                    <h3> Live Feed </h3>
+                    <p> View live data from the making plant, such as latest batch made, current stock tank levels </p>
+                </div>
+                <div class="icon">
+                    <i class="far fa-eye"></i>
+                </div>
+                <a asp-area="" asp-controller="Home" asp-action="LiveFeed" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h3> Batch Reports </h3>
+                    <p> View / Search through all batch reports </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-paste"></i>
+                </div>
+                <a asp-area="" asp-controller="BatchReports" asp-action="ViewAllBatches" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card-box bg-green">
+                <div class="inner">
+                    <h3> Quality </h3>
+                    <p> View quality trends & PCS compliance data </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+                <a asp-area="" asp-controller="Quality" asp-action="Index" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+                    
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-box bg-orange">
+                <div class="inner">
+                    <h3> Performance </h3>
+                    <p> View performance related issues </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <a href="#" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h3> Mat Var </h3>
+                    <p> Search material variance on any material </p>
+                    <div class="icon">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                    <a asp-area="" asp-controller="MatVar" asp-action="Index" class="card-box-footer"> View More <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

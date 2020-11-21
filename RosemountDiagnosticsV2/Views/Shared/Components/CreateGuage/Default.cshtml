@@ -1,0 +1,62 @@
+﻿@model RosemountDiagnosticsV2.View_Models.CreateGuageViewModel
+
+@{
+    Layout = null;
+}
+<script src="~/lib/Guages.js"></script>
+
+<link href="~/css/CreateGuage.css" rel="stylesheet" />
+<div class="row guageBox">
+    <div class="col-md-12">
+        <div class="GuageTitle">@Model.Title</div>
+        <br />
+    </div>
+    <div class="col-md-12">
+        <canvas height="@Model.Height" width="@Model.Width" id="@Model.Title"></canvas>
+    </div>
+    <div class="col-md-12">
+        <div id="@Model.Title-Value" class="gauge-value"></div>
+    </div>
+</div>
+<script>
+
+
+        var opts = {
+            angle: 0, // The span of the gauge arc
+            lineWidth: 0.44, // The line thickness
+            radiusScale: 1, // Relative radius
+            pointer: {
+                length: 0.6, // // Relative to gauge radius
+                strokeWidth: 0.035, // The thickness
+                color: '#000000' // Fill color
+            },
+            limitMax: false,     // If false, max value increases automatically if value > maxValue
+            limitMin: false,     // If true, the min value of the gauge will be fixed
+            colorStart: '#6FADCF',   // Colors
+            colorStop: '#8FC0DA',    // just experiment with them
+            strokeColor: '#E0E0E0',  // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true,     // High resolution support
+            staticZones: [
+                { strokeStyle: "#F03E3E", min: 0, max: @Model.RecipeLimit.Min }, // Red from 100 to 130
+                { strokeStyle: "#FFDD00", min: @Model.RecipeLimit.Min, max: @Model.RecipeLimit.Target-@Model.RecipeLimit.Tolerance }, // Yellow
+                { strokeStyle: "#30B32D", min: @Model.RecipeLimit.Target-@Model.RecipeLimit.Tolerance, max: @Model.RecipeLimit.Target+@Model.RecipeLimit.Tolerance }, // Green
+                { strokeStyle: "#FFDD00", min: @Model.RecipeLimit.Target+@Model.RecipeLimit.Tolerance, max: @Model.RecipeLimit.Max }, // Yellow
+                { strokeStyle: "#F03E3E", min:  @Model.RecipeLimit.Max, max: @Model.RecipeLimit.GuageMax }  // Red
+            ],
+
+        };
+
+
+
+        var currentGauge = document.getElementById('@Model.Title');
+        var Gauge = new Gauge(currentGauge).setOptions(opts); // create sexy gauge!
+        Gauge.maxValue = @Model.RecipeLimit.GuageMax; // set max gauge value
+        Gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+        Gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        Gauge.set(@Model.ActualValue); // set actual value
+    Gauge.setTextField(document.getElementById("@Model.Title-Value"));
+
+    
+
+</script>

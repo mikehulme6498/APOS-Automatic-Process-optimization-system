@@ -1,0 +1,78 @@
+﻿@model RosemountDiagnosticsV2.View_Models.QualityControlChartViewModel
+
+@{
+    ViewData["Title"] = "Quality Control Charts";
+}
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Quality" asp-action="Index">Quality</a></li>
+    <li><a asp-controller="Quality" asp-action="ControlCharts">Control Charts</a></li>
+</ul>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@await Component.InvokeAsync("DateSelector", Model.DateSelectorModal)
+<div class="info-card">
+    <div class="info-card-heading">Select parameter to view</div>
+    <div class="info-card-content-alignLeft">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ParameterId">Parameter:</label>
+                        <select asp-for="ParameterId" asp-items="@Model.ParametersForDropdown" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="timeframe">Choose Timeframe:</label><br />
+                    <button id="timeframe" class="btn-primary btn-sm " data-target="#dateSelect" data-toggle="modal">Select Dates</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="info-card loading-giff" style="display:none">
+    <div class="info-card-content-alignCenter">
+        <img src="~/Images/Gifs/loadingGif.gif" height="300" width="300" />
+    </div>
+</div>
+<div id="results"></div>
+
+
+
+
+
+<script>
+
+    $("#dateSubmitButton").click(function () {
+        $('.loading-giff').show();
+        $('#results').hide();
+        var parameter = $("#ParameterId").val();
+        var timeFrame = $("input[name='TimeFrame']:checked").val();
+        var year = $("#Year option:selected").text();
+        var yearForWeek = $("#YearForWeek option:selected").text();
+        var week = $("#Week option:selected").text();
+        var dateFrom = $("#DateFrom").val();
+        var dateTo = $("#DateTo").val();
+
+        var dateSelection = { 'TimeFrame': timeFrame, 'Year': year, 'YearForWeek': yearForWeek, 'Week': week, 'DateFrom': dateFrom, 'DateTo': dateTo };
+        var details = { 'ParameterId': parameter, 'DateSelectorModal': dateSelection };
+
+        $("#results").load('../Quality/ShowControlChart', { qualityControlChartViewModel: details }, function () {
+            $('.loading-giff').hide();
+            $('#results').show();
+        });
+    });
+
+
+
+
+
+</script>

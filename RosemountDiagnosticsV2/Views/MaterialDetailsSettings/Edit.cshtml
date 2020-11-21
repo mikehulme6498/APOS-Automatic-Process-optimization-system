@@ -1,0 +1,106 @@
+﻿@model BatchDataAccessLibrary.Models.MaterialDetails
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="MaterialDetailsSettings" asp-action="Index">List Of New Materials</a></li>
+    <li>Edit New Material</li>
+</ul>
+<hr />
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Editing - @Model.Name</div>
+            <div class="info-card-content-alignLeft">
+                <form asp-action="Edit" class="form-horizontal">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MaterialDetailsId" />
+                    <div class="form-group">
+                        @*<label asp-for="Name" class="control-label"></label>*@
+                        <input type="hidden" asp-for="Name" />
+                        @*<span asp-validation-for="Name" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ShortName" class="control-label"></label>
+                        <input asp-for="ShortName" class="form-control" />
+                        <span asp-validation-for="ShortName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductCode" class="control-label"></label>
+                        <input asp-for="ProductCode" class="form-control" />
+                        <span asp-validation-for="ProductCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvgWeighTime" class="control-label"></label>
+                        <input asp-for="AvgWeighTime" class="form-control" />
+                        <span asp-validation-for="AvgWeighTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvgWaitTime" class="control-label"></label>
+                        <input asp-for="AvgWaitTime" class="form-control" />
+                        <span asp-validation-for="AvgWaitTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CostPerTon" class="control-label"></label>
+                        <input asp-for="CostPerTon" class="form-control" />
+                        <span asp-validation-for="CostPerTon" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ParallelWeighGroup" class="control-label"></label>
+                        <input asp-for="ParallelWeighGroup" class="form-control" />
+                        <span asp-validation-for="ParallelWeighGroup" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ParallelGroupOrder" class="control-label"></label>
+                        <input asp-for="ParallelGroupOrder" class="form-control" />
+                        <span asp-validation-for="ParallelGroupOrder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="IncludeInMatVar" /> @Html.DisplayNameFor(model => model.IncludeInMatVar)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="NeedsDetailsInput" /> @Html.DisplayNameFor(model => model.NeedsDetailsInput)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary pull-right" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,741 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #efefef !important;
+    /*background: #F7F8FB;*/
+}
+
+.unilever-blue-bg {
+    background-color: #005EEF;
+}
+
+.page-title {
+    color: grey;
+    position: absolute;
+    font-size: 12px;
+    left: 80px;
+}
+
+#content {
+    padding-left: 120px;
+    padding-right: 40px;
+    padding-top: 50px;
+    background: #efefef;
+    
+    min-height: 100vh;
+}
+
+.well {
+    background-color: #fff;
+}
+
+ul a, a.navbar-brand {
+    color: #fff;
+}
+
+.dropdown-item a {
+    /*color: #337ab7;*/
+    color: black;
+}
+
+.table-icon{
+    min-width: 30px;
+}
+/*.dropdown-menu li {
+    margin-top: 5px;
+}
+
+.dropdown-menu ul, .dropdown-item li a {
+    color: #337ab7;
+}
+
+.dropdown-menu ul li:hover,
+.dropdown-menu ul li:hover a {
+    background-color: #337ab7;
+    color: #fff;
+    text-decoration: none;
+}*/
+
+.well h5 {
+    color: #999;
+}
+
+.negative {
+    color: red;
+}
+
+.positive {
+    color: green;
+}
+
+/*STOCK TANK STUFF*/
+.stockTankName {
+    font-size: smaller;
+}
+
+.stockTankWell {
+    /*margin:4px,0,2px,0;*/
+    padding: 0;
+}
+
+    .stockTankWell > .well {
+        margin-left: 2px;
+        margin-right: 2px;
+        text-align: center;
+        padding: 0;
+        background-color: transparent;
+        border: solid;
+    }
+
+    .stockTankWell p {
+        width: 100%;
+    }
+
+.well-info {
+    background-color: lightgoldenrodyellow;
+}
+
+
+
+/*.container {
+    width: 95% !important;
+}
+*/
+.header {
+    font-size: 25px;
+    font-weight: 100;
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    background-color: white;
+}
+
+.stock-tank-fill {
+    height: 40px;
+    background-color: blue;
+    position: absolute;
+}
+
+#tank {
+    transform: rotate(270deg);
+    height: 30px;
+}
+
+meter::-webkit-meter-optimum-value {
+    background-color: blue;
+}
+
+.tank-fill {
+    background-size: 30px;
+    background-color: blue;
+}
+
+/* ALL BOX STYLES*/
+
+.info-box {
+    text-align: center;
+}
+
+.info-box-heading {
+    /*font-family: 'Lato', sans-serif;*/
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info-box-subheading {
+    /* font-family: 'Lato', sans-serif;*/
+    font-size: 15px;
+}
+
+.info-box-value-big {
+    /*font-family: 'Lato', sans-serif;*/
+    color: darkgrey;
+    font-size: 30px;
+}
+
+.info-box-value-small {
+    /*font-family: 'Lato', sans-serif;*/
+    color: darkgrey;
+    font-size: 18px;
+}
+
+.info-box-value-medium {
+    /*font-family: 'Lato', sans-serif;*/
+    color: darkgrey;
+    font-size: 22px;
+}
+
+/* TESTING NEW CARD FOR MAIN PAGE*/
+
+.info-card {
+    -webkit-box-shadow: 4px 4px 19px -1px rgba(143,135,143,0.6);
+    -moz-box-shadow: 4px 4px 19px -1px rgba(143,135,143,0.6);
+    box-shadow: 4px 4px 19px -1px rgba(143,135,143,0.6);
+    /* height: 300px;*/
+    background-color: white;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    /*padding-left: 20px;
+    padding-right: 20px;*/
+    font-family: 'Lato';
+    border-radius:10px;
+}
+
+.info-card-fluid {
+    -webkit-box-shadow: 4px 4px 19px -1px rgba(143,135,143,0.6);
+    -moz-box-shadow: 4px 4px 19px -1px rgba(143,135,143,0.6);
+    box-shadow: 4px 4px 19px -1px rgba(143,135,143,0.6);
+    /* height: 300px;*/
+    background-color: white;
+    margin-top: 20px;
+    padding-left: 1px;
+    padding-right: 1px;
+    font-family: 'Lato';
+    border-radius: 10px;
+}
+
+.info-card-overflowY {
+    overflow-y: auto;
+}
+
+.info-card-overflowX {
+    overflow-x: auto;
+}
+
+.info-card-heading {
+    width: 100%;
+    height: 40px;
+    border-bottom: 4px solid #EFEFEF;
+    text-align: left;
+    line-height: 40px;
+    padding-left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #638ccc !important; /*#e8edfa;*/
+    color:white;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+}
+
+.info-card-footer {
+    width: 100%;
+    height: 50px;
+    border-top: 4px solid #EFEFEF;
+    text-align: left;
+    line-height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+   /* padding-bottom: 75px;*/
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footer-right{
+    text-align: right !important;
+    /*padding-right: 10px !important;*/
+}
+
+.footer-no-top-border{
+    border-top:none !important;
+}
+
+.info-card-icon {
+    font-size: 18px;
+    color: green;
+    padding-right: 20px;
+}
+
+info-card-options {
+    font-size: 18px;
+    right: 0;
+}
+
+.info-card-content-alignLeft {
+    
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top:20px;
+}
+
+.info-card-content-alignRight {
+    padding: 15px;
+    text-align: right;
+}
+
+.info-card-content-alignCenter {
+    padding: 15px;
+    text-align: center;
+}
+
+.info-card-small-padding {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top:10px !important;
+}
+
+.mh-400{
+    height:400px;
+}
+
+.mh-350{
+    height:350px;
+}
+
+.height-25 {
+    height: 25px !important;
+}
+
+/* ACCORDIAN */
+
+.accordion {
+    background-color: white;
+    /*color: #444;*/
+    cursor: pointer;
+    /*padding: 18px;*/
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    /*font-size: 15px;*/
+    transition: 0.4s;
+}
+
+    .active, .accordion:hover {
+        background-color: #ccc;
+        color: white;
+    }
+
+.panel {
+    padding: 0 18px;
+    /*display: none;*/
+    max-height: 0;
+    background-color: white;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    height: auto;
+}
+
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    color: white;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+
+/* Scoller */
+
+#thin-scroller::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 6px;
+    background-color: #F5F5F5;
+}
+
+#thin-scroller::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+#thin-scroller::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #a6a1a1;
+}
+
+#thin-scroller::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 6px;
+    background-color: #F5F5F5;
+}
+
+#thin-scroller::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+#thin-scroller::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #a6a1a1;
+}
+
+
+
+/*SIDEMENU CSS*/
+
+
+.sidenav {
+    height: 100%;
+    width: 70px;
+    position: fixed;
+    z-index: 1;
+    top: 50px;
+    left: 0;
+    background-color: #005EEF;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+}
+
+    .sidenav a {
+        padding: 8px 2px 8px 2px;
+        text-decoration: none;
+        font-size: 10px;
+        color: #fffff4;
+        display: block;
+        transition: 0.3s;
+        text-align: center;
+    }
+
+        .sidenav a:hover {
+            color: #005EEF;
+            background-color: #efefef;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        /*visibility: hidden;*/
+    }
+
+    .sidenav .openbtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+.side-menu-item .active {
+    background-color: #1B3E70;
+    color: white;
+}
+
+.side-menu-item i {
+    font-size: 20px;
+}
+
+#topMenu {
+    height: 50px;
+    width: 100%;
+    background-color: #005EEF;
+    padding-left: -60px;
+    color: white;
+    position: fixed;
+    z-index: 99;
+}
+
+.top-menu-logo {
+    position: absolute;
+    top: 5px;
+    margin-left: 15px;
+}
+
+.top-menu-header {
+    position:absolute;
+    font-size: 20px;
+    line-height: 50px;
+    margin-left:80px;
+}
+
+.top-menu-login{
+    display:inline-block;
+    text-align:right;
+    background-color:red;
+}
+
+.login {
+    text-align:right;
+    line-height: 50px;
+    padding-right: 5px;
+    font-size: 20px;
+    
+}
+.login a{
+    color:white;
+}
+
+.login a:hover{
+    color:lightgrey;
+    text-decoration:none;
+}
+
+.login-name{
+    color:black !important;
+    background-color:transparent !important;
+    font-size:16px !important;
+}
+
+/*.login .dropdown-menu{
+    right:19px !important;
+    left:90% !important;
+    float:right !important;
+    padding-left: 10px !important;
+}*/
+
+.dropdown-menu{
+    position:absolute !important;
+    right:0 !important;
+    left:auto !important;
+}
+
+.login form{
+    display:inline-block;
+}
+
+    .login:hover {
+        cursor: pointer;
+    }
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+
+/* NOTIFICATION STAYLES*/
+
+.notification {
+    /*background-color: #555;*/
+    color: white !important;
+    text-decoration: none;
+    padding-right: 50px;
+    padding-left: 3px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+    font-size: 15px;
+    width: 30px;
+}
+
+    /*.notification:hover {
+        background: red;
+    }*/
+
+    .navbar-right{
+        display: flex !important;
+    }
+
+    .valign-middle-of-navbar{
+        line-height:35px;
+    }
+
+    .bell{
+        font-size:26px;
+    }
+
+.signedInName{
+    color:white !important;
+    font-size:18px;
+}
+
+
+.notification .badge {
+    position: absolute;
+    top: 1px;
+    right: 15px;
+    /*padding: 5px 10px;*/
+    border-radius: 50%;
+    background: red;
+    color: white;
+    font-size: 13px;
+}
+
+/* HOME SCREEN BOXES */
+
+.card-box {
+    position: relative;
+    color: #fff;
+    padding: 20px 10px 40px;
+    margin: 20px 0px;
+}
+
+    .card-box:hover {
+        text-decoration: none;
+        color: #f1f1f1;
+    }
+
+        .card-box:hover .icon i {
+            font-size: 100px;
+            transition: 1s;
+            -webkit-transition: 1s;
+        }
+
+    .card-box .inner {
+        padding: 5px 10px 0 10px;
+    }
+
+    .card-box h3 {
+        font-size: 27px;
+        font-weight: bold;
+        margin: 0 0 8px 0;
+        white-space: nowrap;
+        padding: 0;
+        text-align: left;
+    }
+
+    .card-box p {
+        font-size: 15px;
+    }
+
+    .card-box .icon {
+        position: absolute;
+        top: auto;
+        bottom: 5px;
+        right: 5px;
+        z-index: 0;
+        font-size: 72px;
+        color: rgba(0, 0, 0, 0.15);
+    }
+
+    .card-box .card-box-footer {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        text-align: center;
+        padding: 3px 0;
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        text-decoration: none;
+    }
+
+    .card-box:hover .card-box-footer {
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+.bg-blue {
+    background-color: #00c0ef !important;
+}
+
+.bg-green {
+    background-color: #00a65a !important;
+}
+
+.bg-orange {
+    background-color: #f39c12 !important;
+}
+
+.bg-red {
+    background-color: #d9534f !important;
+}
+
+.bg-purple {
+    background-color: #6A0DAD !important;
+}
+
+.bg-active-caption {
+    background-color: #99B4D1;
+}
+
+.bg-whitesmoke{
+    background-color: whitesmoke;
+}
+
+
+/* Currently used in quality control charts */
+.container {
+    position: relative;
+}
+
+.bottom-align-left {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+}
+
+.bottom-align-right {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+}
+
+/* BREADCRUMB NAVIGATION */
+
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: lightgray;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 16px;
+    font-family: Arial;
+    font-weight:600;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li + li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
+.add-new-record-icon{
+    color:green;
+    font-size:20px;
+}
+
+/* SETTINGS PAGES */
+
+.font-18{
+    font-size:18px;
+}
+.font-20 {
+    font-size: 20px;
+}
+.font-22 {
+    font-size: 22px;
+}
+.font-24 {
+    font-size: 24px;
+}
+
+.pad-left-15{
+    padding-left:15px;
+}
+
+.table-no-style tr, td, thead, tbody {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* NEW NAVBAR */
+
+.navbar {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+}
+
+.navbar-title{
+    color: white;
+    font-size: 22px;
+}

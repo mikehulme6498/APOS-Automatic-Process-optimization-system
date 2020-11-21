@@ -1,0 +1,43 @@
+﻿@model BatchDataAccessLibrary.Models.PcsWeightParameters
+
+@{
+    ViewData["Title"] = "Delete PCS Parameter Limit";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="PcsParameterSettings" asp-action="Index">Add / Remove Pcs Parameters</a></li>
+    <li>Delete Parameter</li>
+</ul>
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Are you sure you want to delete this?</div>
+            <div class="info-card-content-alignLeft">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RecipeType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RecipeType)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Parameter)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Parameter)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete" class="footer-right">
+                    <input type="hidden" asp-for="PcsWeightParametersId" />
+                    <a asp-action="Index" class="btn btn-info">Back to List</a>
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

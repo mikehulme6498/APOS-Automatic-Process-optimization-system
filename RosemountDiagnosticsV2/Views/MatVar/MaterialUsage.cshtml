@@ -1,0 +1,49 @@
+﻿@model RosemountDiagnosticsV2.View_Models.MaterialUsageViewModel
+
+@{
+    ViewData["Title"] = "Material Usage";
+}
+
+<link href="~/css/StreamInfoBox.css" rel="stylesheet" />
+<link href="~/css/ItemBoxStyleSheet.css" rel="stylesheet" />
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li>View Material Usage</li>
+
+</ul>
+<br />
+<br />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="info-card">
+                <div class="info-card-heading">View Usage of Single Material</div>
+                <div class="info-card-content-alignLeft">
+                    <form action="MaterialUsageSingle" method="post" id="view-single-material-form">
+                        @*<input type="hidden" asp-for="Year" />*@
+                        <input type="hidden" asp-for="DateSelectorModal.Year" />
+                        <input type="hidden" asp-for="DateSelectorModal.TimeFrame" />
+                        <input type="hidden" asp-for="DateSelectorModal.TimeFrameTitle" />
+                        <input type="hidden" asp-for="DateSelectorModal.Week" />
+                        <input type="hidden" asp-for="DateSelectorModal.YearForWeek" />
+                        <label asp-for="Name">Select Material :</label>
+                        <select asp-for="Name" asp-items="Model.MaterialsForDropDown" class="form-control"></select>
+
+                    </form>
+                </div>
+                <div class="info-card-footer footer-right footer-no-top-border">
+                    <input type="submit" form="view-single-material-form" class="btn btn-primary" />
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

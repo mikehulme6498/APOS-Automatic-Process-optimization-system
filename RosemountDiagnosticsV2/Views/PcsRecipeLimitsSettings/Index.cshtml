@@ -1,0 +1,82 @@
+﻿@model IEnumerable<BatchDataAccessLibrary.Models.RecipeLimits>
+
+@{
+    ViewData["Title"] = "Recipe Limits";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>Recipe Limits</li>
+</ul>
+
+<div class="alert alert-info">
+    These settings are used by the guages & control charts.
+</div>
+
+<div class="info-card">
+    <div class="info-card-heading">Parameters used by charts and guages </div>
+    <div class="info-card-content-alignLeft">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RecipeType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LimitTypes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Min)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Max)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GuageMax)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Target)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tolerance)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RecipeType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LimitTypes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Min)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Max)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GuageMax)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Target)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tolerance)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.RecipeLimitsId" class="btn btn-info btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*<a asp-action="Create"><i class="fas fa-plus-circle add-new-record-icon"></i><span class="font-18"> Add New Parameter</span></a>*@
+    </div>
+</div>

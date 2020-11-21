@@ -1,0 +1,455 @@
+﻿
+@model RosemountDiagnosticsV2.View_Models.SingleBatchViewModel
+<script src="~/lib/Guages.js"></script>
+
+@{
+    ViewData["Title"] = "View Single Batch";
+}
+<link href="~/css/SingleBatchReport.css" rel="stylesheet" />
+<link href="~/css/CreateGuage.css" rel="stylesheet" />
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="BatchReports" asp-action="ViewAllBatches">View All Batches</a></li>
+    <li>View Single Batch</li>
+</ul>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="info-card info-card-overflowY">
+                <div class="info-card-heading">Batch Information</div>
+                <div class="info-card-content-alignLeft">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-3">
+                            <table id="batch-info-table">
+                                <tbody>
+                                    <tr>
+                                        <td>Recipe :</td>
+                                        <td>@Model.Report.Recipe</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Recipe Type :</td>
+                                        <td>@Model.Report.RecipeType</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stream :</td>
+                                        <td>@Model.Report.StreamName</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <table id="batch-info-table">
+                                <tbody>
+                                    <tr>
+                                        <td>Batch Number :</td>
+                                        <td>@Model.Report.Campaign-@Model.Report.BatchNo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Started :</td>
+                                        <td>@Model.Report.StartTime</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <div class="row guageBox">
+                                <div class="col-md-12 height-25">
+                                    <div class="GuageTitle">Batch Time</div>
+                                    <br />
+                                </div>
+                                <div class="col-md-12">
+                                    <canvas height="75" id="makeTime-Guage"></canvas>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="makeTimeValue" class="gauge-value"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <div class="row guageBox">
+                                <div class="col-md-12 height-25">
+                                    <div class="GuageTitle">Visco</div>
+                                    <br />
+                                </div>
+                                <div class="col-md-12">
+                                    <canvas height="75" id="visco-guage"></canvas>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="viscoValue" class="gauge-value"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-xl-4">
+            <div class="info-card mh-400">
+                <div class="info-card-heading">Time Issues - @Model.TotalTimeLost Minutes Lost</div>
+                <div class="info-card-content-alignLeft info-card-small-padding mh-350 overflow-auto" id="thin-scroller">
+                    @if (Model.TimeIssues.Count == 0)
+                    {
+                        <batch-issue-box fault-type=NoIssue material-name="No issues Found" message=" "></batch-issue-box>
+                    }
+                    else
+                    {
+                        @foreach (var issue in Model.TimeIssues)
+                        {
+                            if (issue.RemoveIssue == false && issue.FaultType == BatchDataAccessLibrary.Models.BatchIssue.FaultTypes.WeighTime || issue.FaultType == BatchDataAccessLibrary.Models.BatchIssue.FaultTypes.WaitTime)
+                            {
+                                <batch-issue-box fault-type="@issue.FaultType" material-name="@issue.MaterialShortName" message="@issue.Message" time-lost="@issue.TimeLost"></batch-issue-box>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-4">
+            <div class="info-card mh-400">
+                <div class="info-card-heading">Potential Quality Issues - @Model.TotalQualityIssues</div>
+                <div class="info-card-content-alignLeft info-card-small-padding mh-350 overflow-auto" id="thin-scroller">
+                    @if (Model.QualityIssues.Count == 0)
+                    {
+                        <batch-issue-box fault-type=NoIssue material-name="No issues Found" message="  "></batch-issue-box>
+                    }
+                    else
+                    {
+                        @foreach (var issue in Model.QualityIssues)
+                        {
+                            <batch-issue-box fault-type="@issue.FaultType" material-name="@issue.MaterialShortName" message="@issue.Message" actual-reading="@issue.ActualReading"></batch-issue-box>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-4">
+            <div class="info-card mh-400">
+                <div class="info-card-heading">Material Variance Issues (Over 5%)</div>
+                <div class="info-card-content-alignLeft info-card-small-padding mh-350 overflow-auto" id="thin-scroller">
+                    @if (Model.MatVarIssues.Count == 0)
+                    {
+                        <batch-issue-box fault-type=NoIssue material-name="No issues Found" message="  "></batch-issue-box>
+                    }
+                    else
+                    {
+                        @foreach (var issue in Model.MatVarIssues)
+                        {
+                            <batch-issue-box fault-type="@issue.FaultType" material-name="@issue.MaterialShortName" message="@issue.Message" percent-out="@issue.PercentOut"></batch-issue-box>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-7 col-md-6">
+            <div class="info-card">
+                <div class="info-card-heading">Additional Info</div>
+                <div class="info-card-content-alignLeft">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="right-align">Stock Allocation Time :</td>
+                                <td class="left-align">@Model.Report.StockTankAllocationTime Minutes</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Allocated To : </td>
+                                <td class="left-align">@Model.Report.AllocatedTo</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Drop Time :</td>
+                                <td class="left-align">@Model.Report.DropTime Minutes</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Total Recipe Weight :</td>
+                                <td class="left-align">@Model.Report.TotalRecipeWeight Ton</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Total Actual Weight :</td>
+                                <td class="left-align">@Model.Report.TotalActualWeight Ton</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Vessel Weight Increase:</td>
+                                <td class="left-align">@Model.Report.VesselWeightIncrease Ton</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-md-6 ">
+            <div class="info-card">
+                <div class="info-card-heading">Quality Checks</div>
+                <div class="info-card-content-alignLeft">
+                    <table class="QaData">
+                        <tbody>
+                            <tr>
+                                <td class="right-align">pH :</td>
+                                <td class="left-align">@Model.Report.Ph</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">S.G :</td>
+                                <td class="left-align">@Model.Report.SG</td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Apperance :</td>
+                                <td class="left-align"><span id="appearance"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Visual Colour :</td>
+                                <td class="left-align"><span id="visualColour"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Odour Check :</td>
+                                <td class="left-align"><span id="odour"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="right-align">Overall QA Status :</td>
+                                <td class="left-align"><span id="overallQa"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="info-card">
+            <button class="accordion info-card-heading"><span class="expand"><i class="fas fa-plus-circle"></i> Detailed Report</span></button>
+            <div class="panel">
+                <br />
+                @foreach (var vessel in Model.Report.AllVessels)
+                {
+                    <h4 class="parentCell">
+                        @vessel.VesselName - @vessel.VesselType
+                        <span class="cell-tooltip">Vessel ID : @vessel.VesselId</span>
+                    </h4>
+                    <table class="table batchInfo" id="batch-details-table">
+                        <thead>
+                            <tr>
+                                <td><b>Material</b></td>
+                                <td><b>Target Weight</b></td>
+                                <td><b>Actual Weight</b></td>
+                                <td><b>Start Time</b></td>
+                                <td><b>Wait Time</b></td>
+                                <td><b>Weigh Time</b></td>
+                                <td><b>Vessel Before</b></td>
+                                <td><b>Weight After</b></td>
+                                <td><b>Vessel Temp</b></td>
+                                <td><b>Agitator Speed</b></td>
+                                <td><b>Raw MaterialTemp</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var material in vessel.Materials)
+                            {
+                                <tr>
+                                    <td class="parentCell">
+                                        @material.Name
+                                        <span class="cell-tooltip">@material.Name Id : @material.MaterialId</span>
+                                    </td>
+                                    <td>@material.TargetWeight Kg</td>
+                                    <td>@material.ActualWeight Kg</td>
+                                    <td>@material.StartTime.ToShortTimeString()</td>
+                                    <td>@material.WaitTime M</td>
+                                    <td>@material.WeighTime M</td>
+                                    <td class="removeZero">@material.VesselBefore Kg</td>
+                                    <td class="removeZero">@material.WeightAfter Kg</td>
+                                    <td class="removeZero">@material.VesselTemp &#8451</td>
+                                    <td class="removeZero">@material.AgitatorSpeed</td>
+                                    <td class="removeZero">@material.RawMatTemp &#8451</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="row">
+    <div class="col-md-12">
+        <div class="info-card">
+            <div class="info-card-heading">Batch has been scanned for the following issues</div>
+            <div class="info-card-content-alignCenter">
+                <ul>
+                    @foreach (var issueScannedFor in @Model.Report.IssuesScannedFor)
+                    {
+                        <li>@issueScannedFor.IssueName</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="info-card">
+            <div class="info-card-heading">Issues Removed</div>
+            <div class="info-card-content-alignCenter">
+                <div class="row">
+                    @foreach (var issueScannerName in Model.Report.IssuesScannedFor)
+                    {
+                        <div class="col-md-3">
+                            <div>
+                                <h3 class="text-center">@issueScannerName.IssueName</h3>
+                                <ul id="removed-@issueScannerName.IssueName"></ul>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @foreach (var issue in @Model.Report.BatchIssues)
+                {
+                    if (issue.RemoveIssue == true)
+                    {
+                        <script>
+            var ul = document.getElementById('removed-@issue.IssueCreatedBy');
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode("@issue.ReasonRemoved"));
+            ul.appendChild(li);
+                        </script>
+                    }
+                }
+
+                @foreach (var issue in @Model.Report.BatchIssues)
+                {
+
+                    if (issue.FaultType == BatchDataAccessLibrary.Models.BatchIssue.FaultTypes.BatchAdjusted)
+                    {
+                        <h1>Batch Adjustments</h1>
+                        <h4>@issue.Message by @issue.IssueCreatedBy</h4>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+*@
+
+
+@section scripts{
+    <script>
+
+    function GetChartOptions(limits) {
+        var opts = {
+            angle: 0, // The span of the gauge arc
+            lineWidth: 0.44, // The line thickness
+            radiusScale: 1, // Relative radius
+            pointer: {
+                length: 0.6, // // Relative to gauge radius
+                strokeWidth: 0.035, // The thickness
+                color: '#000000' // Fill color
+            },
+            limitMax: false,     // If false, max value increases automatically if value > maxValue
+            limitMin: false,     // If true, the min value of the gauge will be fixed
+            colorStart: '#6FADCF',   // Colors
+            colorStop: '#8FC0DA',    // just experiment with them
+            strokeColor: '#E0E0E0',  // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true,     // High resolution support
+            staticZones: [
+                { strokeStyle: "#F03E3E", min: limits[0], max: limits[1] }, // Red from 100 to 130
+                { strokeStyle: "#FFDD00", min: limits[2], max: limits[3] }, // Yellow
+                { strokeStyle: "#30B32D", min: limits[4], max: limits[5] }, // Green
+                { strokeStyle: "#FFDD00", min: limits[6], max: limits[7] }, // Yellow
+                { strokeStyle: "#F03E3E", min: limits[8], max: limits[9] }  // Red
+            ],
+
+        };
+        return opts;
+    }
+
+
+    var viscoGuage = document.getElementById('visco-guage'); // your canvas element
+    var batchTimeGuage = document.getElementById('makeTime-Guage');
+    var viscolimits = [0, @Model.RecipeViscoLimits.Min,
+                       @Model.RecipeViscoLimits.Min, @Model.RecipeViscoLimits.Target-@Model.RecipeViscoLimits.Tolerance,
+                       @Model.RecipeViscoLimits.Target-@Model.RecipeViscoLimits.Tolerance, @Model.RecipeViscoLimits.Target+@Model.RecipeViscoLimits.Tolerance,
+                       @Model.RecipeViscoLimits.Target+@Model.RecipeViscoLimits.Tolerance, @Model.RecipeViscoLimits.Max,
+                       @Model.RecipeViscoLimits.Max, @Model.RecipeViscoLimits.GuageMax];
+
+    var minuteslimits = [0, @Model.BatchTimeLimits.Min,
+                       @Model.BatchTimeLimits.Min, @Model.BatchTimeLimits.Target-@Model.BatchTimeLimits.Tolerance,
+                       @Model.BatchTimeLimits.Target-@Model.BatchTimeLimits.Tolerance, @Model.BatchTimeLimits.Target+@Model.BatchTimeLimits.Tolerance,
+                       @Model.BatchTimeLimits.Target+@Model.BatchTimeLimits.Tolerance, @Model.BatchTimeLimits.Max,
+                       @Model.BatchTimeLimits.Max, @Model.BatchTimeLimits.GuageMax];
+
+    var viscogauge = new Gauge(viscoGuage).setOptions(GetChartOptions(viscolimits)); // create sexy gauge!
+    viscogauge.maxValue = @Model.RecipeViscoLimits.GuageMax; // set max gauge value
+    viscogauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+    viscogauge.animationSpeed = 32; // set animation speed (32 is default value)
+    viscogauge.set(@Model.Report.Visco); // set actual value
+    viscogauge.setTextField(document.getElementById("viscoValue"));
+
+    var batchtimeguage = new Gauge(batchTimeGuage).setOptions(GetChartOptions(minuteslimits));
+    batchtimeguage.maxValue = @Model.BatchTimeLimits.GuageMax; // set max gauge value
+    batchtimeguage.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+    batchtimeguage.animationSpeed = 32; // set animation speed (32 is default value)
+    batchtimeguage.set(@Model.Report.MakingTime); // set actual value
+    batchtimeguage.setTextField(document.getElementById("makeTimeValue"));
+
+    function GetGlyphIcon(spanId, result) {
+        let span = document.getElementById(spanId);
+        if (result == "OK" || result == "PASS") {
+            span.className = "fas fa-check-circle positive";
+        } else {
+            span.className = "fas fa-times-circle negative";
+        }
+    }
+
+    GetGlyphIcon("appearance", "@Model.Report.Appearance");
+    GetGlyphIcon("visualColour", "@Model.Report.VisualColour");
+    GetGlyphIcon("odour", "@Model.Report.Odour");
+    GetGlyphIcon("overallQa", "@Model.Report.OverallQAStatus");
+
+    var acc = document.getElementsByClassName("accordion");
+
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + 500 + "px";
+            }
+        });
+    }
+
+        
+
+        $('.removeZero').each(function () {
+            if (this.innerText.startsWith("0")) {
+                this.innerText = "";
+            }
+        });
+        
+    </script>
+}

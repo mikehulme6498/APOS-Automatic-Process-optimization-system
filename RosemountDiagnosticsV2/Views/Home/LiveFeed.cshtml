@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewData["Title"] = "Live Feed";
+}
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li>Live Feed</li>
+</ul>
+<br />
+<br />
+<link href="~/css/LastBatch.css" rel="stylesheet" />
+
+<div row>
+    <div class="well">
+        <div id="testdiv"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <div class="well text-center">
+            @await Component.InvokeAsync("BatchesMade")
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="well">
+            <h4 class="text-center">Last Batch</h4>
+            @*@await Component.InvokeAsync("LastBatchMade")*@
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="well">
+            <table width="100%">
+                <tr class="text-center">
+                    <td colspan="3">Batches Made This Week</td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="3">22</td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="3"><hr /></td>
+                </tr>
+                <tr>
+                    <td><info-box heading="Conc" value="15" subheading=""></info-box></td>
+                    <td><info-box heading="Big Bang" value="2" subheading=""></info-box></td>
+                    <td><info-box heading="Regs" value="5" subheading=""></info-box></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="info-card">
+            <div class="info-card-heading">
+                @*<div class="glyphicon glyphicon-eye-open info-card-icon"></div>*@
+                Last Batch
+                @*<div class="glyphicon glyphicon-menu-hamburger info-card-options"></div>*@
+            </div>
+            <div class="info-card-content-alignLeft">
+                @await Component.InvokeAsync("LastBatchMade")
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <h4 class="text-center">Live Stock Tank Levels</h4>
+            <br />
+            @*<meter id="tank" name="liquid" min="0" max="45000" value="38000"></meter>*@
+            <div class="row">
+                <div class="col-sm-1 stockTankWell">
+                    <div class="tank-fill">
+
+                        <p class="stockTankName text-center"><strong>V601</strong></p>
+                        <p class="stockTankName text-center">BLUCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                        <div class="stock-tank-fill"></div>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V602</strong></p>
+                        <p class="stockTankName">WHTCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V603</strong></p>
+                        <p class="stockTankName">WHTCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V604</strong></p>
+                        <p class="stockTankName">SUNREG</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V605</strong></p>
+                        <p class="stockTankName">BB-SKY</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V606</strong></p>
+                        <p class="stockTankName">BLUCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V607</strong></p>
+                        <p class="stockTankName">BLUCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V608</strong></p>
+                        <p class="stockTankName">BLUCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V611</strong></p>
+                        <p class="stockTankName">SUNCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V612</strong></p>
+                        <p class="stockTankName">BB-OCEAN</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V613</strong></p>
+                        <p class="stockTankName">LILYCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+                <div class="col-sm-1 stockTankWell">
+                    <div class="well">
+                        <p class="stockTankName"><strong>V614</strong></p>
+                        <p class="stockTankName">SUNCON</p>
+                        <br />
+                        <p class="stockTankName text-center">15000kg</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-sm-12">
+        <div class="well">
+            <h4 class="text-center">Mat Var Weekly Chart</h4>
+            @await Component.InvokeAsync("MatVarWeeklyGiveawayChart", new { homePage = true });
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/batch-completed.js"></script>
+}

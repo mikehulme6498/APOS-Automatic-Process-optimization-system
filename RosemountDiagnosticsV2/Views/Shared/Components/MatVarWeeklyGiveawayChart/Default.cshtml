@@ -1,0 +1,72 @@
+﻿@model IEnumerable<RosemountDiagnosticsV2.View_Models.MatVarWeeklyGiveawayTotals>
+
+@{
+    Layout = null;
+}
+
+    <canvas id="weeklyTotals" style="width:100%; height:100%"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script>
+
+        var ctx = document.getElementById('weeklyTotals').getContext('2d');
+    
+    var totals = [];
+    var weeks = [];
+
+
+     @foreach (var week in @Model)
+     {
+        @:weeks.push(@week.Week)
+        @:totals.push(@week.Total)
+        
+     }
+
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+        
+        // The data for our dataset
+        data: {
+            labels: weeks,
+            datasets: [{
+                label: 'Total €',
+                backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                borderColor: 'rgb(255, 99, 132)',
+                fill: false,
+                display: true,
+                data: totals
+            }]
+        },
+        // Configuration options go here
+        options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return Number(tooltipItem.yLabel) + " Total Cost (€)";
+                    }
+                },
+                
+                
+            },            
+         scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Total Cost (€)'
+              }
+                }],
+              xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Week No'
+              }
+            }]
+          } }
+    });
+
+
+    </script>
+
+

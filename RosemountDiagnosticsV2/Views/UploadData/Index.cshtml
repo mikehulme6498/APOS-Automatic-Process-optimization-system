@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Upload New Batch Reports";
+}
+<link href="~/css/DragDrop.css" rel="stylesheet" />
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>Upload New Batch Reports</li>
+</ul>
+<div class="alert alert-info">Please only upload a maximum of 1 week's worth of batches at a time (This method of upload is only temporary)</div>
+
+<div class="row">
+    <div id="drop-area" class="col-md-6 text-center">
+        <form class="my-form">
+            <p>Upload multiple reports by clicking the button below or by dragging and dropping files into this box</p>
+            <input type="file" id="fileElem" multiple accept="txt/*" onchange="handleFiles(this.files)">
+            <label class="btn btn-info" for="fileElem">Select Batch Reports</label>
+        </form>
+        <progress id="progress-bar" max=100 value=0></progress>
+        @using (Html.BeginForm("UploadBatches", "UploadData", FormMethod.Post))
+        {
+            @Html.Hidden("textfromAllfiles", null, new { name = "textfromAllfiles", id = "textfromAllfiles" })
+            <input type="submit" class="btn btn-primary" id="fileSubmit" value="submit" />
+        }
+        <br />
+        <div id="files"></div>
+
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/js/file-upload.js"></script>
+}

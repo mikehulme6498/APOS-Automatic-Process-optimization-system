@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-RosemountDiagnosticsV2-FE49C644-1096-4EF3-AC2B-E6505CFC1EEE</UserSecretsId>
+    <EnvironmentName>Development</EnvironmentName>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="SignalR\**" />
+    <Compile Remove="TestBatchFilesErrors\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="SignalR\**" />
+    <Content Remove="TestBatchFilesErrors\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="SignalR\**" />
+    <EmbeddedResource Remove="TestBatchFilesErrors\**" />
+    <None Remove="Data\**" />
+    <None Remove="SignalR\**" />
+    <None Remove="TestBatchFilesErrors\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="wwwroot\Images\UnileverLogoWhiteSmall.png" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Resource Include="wwwroot\Images\UnileverLogoWhiteSmall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.3" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="microsoft.aspnet.signalr" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BatchDataAccessLibrary\BatchDataAccessLibrary.csproj" />
+    <ProjectReference Include="..\BatchReportIssueScanner\BatchReports.IssueScanner.csproj" />
+    <ProjectReference Include="..\ComplianceChecker\BatchReports.ComplianceChecker.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\files\KING-FT JUST TEMPS.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

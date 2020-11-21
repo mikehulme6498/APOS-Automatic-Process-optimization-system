@@ -1,0 +1,42 @@
+﻿.stream-outline {
+    border: solid;
+    width: auto;
+    height: auto;
+    text-align: center;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-top: 10px;
+    background-color: #EFEFEF;
+    padding-left:5px;
+    padding-right:5px;
+}
+.stream-name {
+    text-transform:uppercase;
+    font-size:20px;
+}
+.loss-type{
+    padding-top:10px;
+}
+
+.loss-info{
+    padding-top:10px;
+    font-size:18px;
+    font-weight:bold;
+}
+.occurances {
+    padding-top: 10px;
+}
+
+.percentage {
+    padding-top: 10px;
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.no-gutters > [class*="col-"]{
+    padding-right: 0;
+    padding-left: 0;
+}

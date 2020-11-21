@@ -1,0 +1,22 @@
+﻿.guageBox {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    
+}
+
+.GuageTitle {
+    position: relative;
+    color: midnightblue;
+    font-size: large;
+}
+
+#visco-guage{
+    text-align:center;
+}
+
+#makeTime-Guage{
+    position:relative;
+}
+
+

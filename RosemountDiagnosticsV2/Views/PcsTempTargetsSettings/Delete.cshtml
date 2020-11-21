@@ -1,0 +1,64 @@
+﻿@model BatchDataAccessLibrary.Models.PcsTempTargets
+
+@{
+    ViewData["Title"] = "Delete PCS Temperature Target";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="PcsTempTargetsSettings" asp-action="Index">View Temp Targets</a></li>
+    <li>Delete temp target</li>
+</ul>
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Are you sure you want to delete @Model.Recipe.ToLower()</div>
+            <div class="info-card-content-alignLeft">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RecipeType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RecipeType)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Recipe)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Recipe)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Target)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Target)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UpperLimit)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UpperLimit)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LowerLimit)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LowerLimit)
+                    </dd>
+                </dl>
+
+                <div class="footer-right">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="PcsTempTargetsId" />
+                        <a asp-action="Index" class="btn btn-info">Cancel</a>
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

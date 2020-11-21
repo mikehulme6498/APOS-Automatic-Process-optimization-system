@@ -1,0 +1,66 @@
+﻿thead tr td {
+    font-weight: bold;
+}
+
+#bb-tote-count, #normal-tote-count {
+    width: 40px;
+    margin: 5px 5px;
+    text-align: center;
+    border: none;
+}
+
+i {
+    font-size: 20px;
+}
+
+    i:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+
+.pad-right {
+    padding-right: 30px;
+}
+
+.pad-top {
+    padding-top: 15px;
+}
+
+#success-alert, #fail-alert {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+.min-height-175 {
+    min-height: 175px;
+}
+
+.toteCount {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#effluent {
+    width: 50px;
+}
+
+/*.dataTable{
+    table-layout:fixed;
+    width:100% !important;
+}*/
+
+#batch-report-table input{
+    margin-left:50%;
+    
+}
+
+#batch-report-table {
+    overflow-x: auto;
+}
+
+/*#batch-report-table th, #batch-report-table td{
+    word-break:break-all !important;
+    word-break: break-word !important;
+}*/

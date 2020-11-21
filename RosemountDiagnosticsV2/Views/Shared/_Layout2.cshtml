@@ -1,0 +1,276 @@
+﻿
+@*@inject SignInManager<BatchDataAccessLibrary.Models.ApplicationUser> signInManager;*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+
+    <environment include="Development">
+        <script src="~/lib/Guages.js"></script>
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="https://kit.fontawesome.com/288fcafc40.js" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/Guages.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+        <script src="https://kit.fontawesome.com/288fcafc40.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default fixed-top unilever-blue-bg">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                      @await Component.InvokeAsync("ApplicationLogo")
+                </a>
+                <span class="pl-4 navbar-title"> @await Component.InvokeAsync("ApplicationTitle")</span>
+            </div>
+
+            <div class="navbar-right">
+                <span class="notification">                    
+                        <span class="bell"><i class="fas fa-bell"></i></span>
+                        <span class="badge">3</span>
+                </span>
+                
+                @*if (signInManager.IsSignedIn(User))
+                   {*@
+                        <div class="dropdown valign-middle-of-navbar">
+                            <a class="dropdown-toggle signedInName" href="#" id="navbarDropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @*@User.Identity.Name*@
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+
+                                <div class="dropdown-item">
+                                    <table>                                        
+                                        <tr>                                           
+                                            <td class="table-icon"><i class="fas fa-user-cog"></i></td>
+                                            <td><a href="#">Manage Roles For User</a></td>                                            
+                                        </tr>                                        
+                                    </table>
+                                    
+                                </div>
+                                <div class="dropdown-item">
+                                    <table>
+                                        <tr>
+                                            <td class="table-icon"><i class="far fa-lightbulb"></i></td>
+                                            <td><a href="#">Make A Suggestion</a></td>
+                                        </tr>
+                                    </table>
+                                    
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-item pull-right">
+                                    <form method="post" asp-action="Logout" asp-controller="Account">
+                                        <button type="submit" class="btn py-0 login-name" value="Logout">
+                                            <i class="fas fa-sign-out-alt pr-3"></i>Logout
+                                        </button>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @*}
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Register">Register</a>
+                        <a asp-controller="Account" asp-action="Login">Login</a>
+                    }*@
+
+                </div>
+            </div>
+       
+    </nav>
+
+    <div id="topMenu">
+
+        <div class="top-menu-logo">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/Images/UnileverLogoWhiteSmall.png">
+            </a>
+        </div>
+
+        <div class="top-menu-header">No 4 Making Plant</div>
+
+        <div class="top-menu-login">
+            help
+            <div class="notification">
+                <a href="#" class="notification">
+                    <span class="glyphicon glyphicon-bell"></span>
+                    <span class="badge">3</span>
+                </a>
+            </div>
+            @*@if (signInManager.IsSignedIn(User))
+            {*@
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" id="navbarDropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                        <div class="dropdown-item">
+                            <form method="post" asp-action="Logout" asp-controller="Account">
+                                <button type="submit" class="btn py-0 login-name" style="width:auto">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                        <div class="dropdown-item">
+                            Manage Roles For User
+                        </div>
+                        <div class="dropdown-item">
+                            Make Suggestion / Complaint
+                        </div>
+                    </div>
+                </div>
+            @*}
+            else
+            {
+                <a asp-controller="Account" asp-action="Register">Register</a>
+                <a asp-controller="Account" asp-action="Login">Login</a>
+            }*@
+        </div>
+    </div>
+
+
+    <div id="content">
+        <div id="mySidenav" class="sidenav">
+            @*<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <span class="openbtn"style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>*@
+            <div class="side-menu-item">
+                <a asp-area="" asp-controller="Home" asp-action="LiveFeed" class="dropdown-item">
+
+                    <i class="far fa-eye"></i><br />Live Feed
+                </a>
+            </div>
+            <div class="side-menu-item">
+                <a asp-area="" asp-controller="BatchReports" asp-action="ViewAllBatches" class="dropdown-item">
+                    <i class="fas fa-paste"></i><br />Batch Reports
+                </a>
+            </div>
+            <div class="side-menu-item">
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-chart-line"></i><br />Performance
+                </a>
+
+            </div>
+            <div class="side-menu-item">
+                <a asp-area="" asp-controller="Quality" asp-action="Index" class="dropdown-item">
+                    <i class="fas fa-search" aria-hidden="true"></i><br />Quality
+                </a>
+            </div>
+            <div class="side-menu-item">
+                <a asp-area="" asp-controller="MatVar" asp-action="Index" class="dropdown-item">
+                    <i class="fas fa-euro-sign"></i><br />Mat Var
+                </a>
+            </div>
+            @*<div class="side-menu-item">
+                <a asp-area="" asp-controller="OperatorLog" asp-action="Index" class="dropdown-item">
+                    <i class="fas fa-user-friends"></i><br />Operator Log
+                </a>
+            </div>*@
+            @*@if (signInManager.IsSignedIn(User) && User.IsInRole("SuperUser"))
+            {*@
+                <div class="side-menu-item">
+                    <a asp-area="" asp-controller="Settings" asp-action="Index" class="dropdown-item">
+                        <i class="fas fa-cog"></i><br />Settings
+                    </a>
+                </div>
+            @*}*@
+        </div>
+
+
+
+
+        <div class="content">
+
+            @RenderBody()
+
+
+
+            @*<footer class="border-top footer text-muted">
+                    <div class="container">
+                        &copy; 2020 - RosemountDiagnosticsV2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </footer>*@
+        </div>
+    </div>
+    <environment include="Development">
+
+
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+        @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/js/bootstrap.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV">
+        </script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementsByClassName("closebtn").style.visibility = "visible";
+
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "60px";
+        }
+
+        $('.side-menu-item a').click(function () {
+
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+        function changeBackground() {
+            if (sessionStorage.getItem('colour')) {
+                document.body.style.backgroundColor = sessionStorage.getItem('colour');
+            } else {
+                document.body.style.backgroundColor = "#BB0A21";
+                sessionStorage.setItem('colour', "#BB0A21");
+            }
+        }
+
+        // then you'll need to call your function on page load
+        changeBackground();
+    </script>
+
+
+</body>
+</html>

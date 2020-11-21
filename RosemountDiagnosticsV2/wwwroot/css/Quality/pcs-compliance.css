@@ -1,0 +1,256 @@
+﻿#pcsDaily {
+    background-color: white;
+    /*border: 1px solid;*/
+    width: 90% !important;
+}
+
+    #pcsDaily tbody tr:last-child {
+        background-color: #6883a3 !important;
+        color: white !important;
+    }
+
+    #pcsDaily tbody tr:nth-last-child(2) {
+        background-color: #6883a3 !important;
+        color: white !important;
+    }
+
+    #pcsDaily tbody tr:nth-last-child(3) {
+        background-color: #6883a3 !important;
+        color: white !important;
+    }
+
+.table-figures {
+    text-align: center;
+}
+
+thead {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    /*background-color: #4F81BD;*/
+    background-color: white;
+    color: black;
+}
+
+    thead tr td {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        vertical-align: middle;
+    }
+
+tbody tr {
+    height: 25px;
+}
+
+
+
+.add-percentage::after {
+    content: "%";
+}
+
+.table-row-heading {
+    width: 150px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.pcs-daily-overview {
+    width: 100%;
+    border: 1px solid black;
+    min-height: 150px;
+    border-radius: 2px;
+    margin-top: 15px;
+    background-color: #EFEFEF;
+}
+
+.pcs-daily-overview-title {
+    height: 25px;
+    background-color: #f7b416;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+.pcs-daily-overview-heading {
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.pcs-daily-overview-subheading {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.pcs-daily-overview-icon {
+    font-size: 120px;
+    padding-left: 10px;
+}
+
+.pcs-daily-icon-warning {
+    color: #f7b416;
+    /*text-shadow: 0 0 5px #000;*/
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.pcs-daily-icon-error {
+    color: #ff0000;
+    /*text-shadow: 0 0 5px #000;*/
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.pcs-daily-icon-good {
+    color: #21cc14;
+    /*text-shadow: 0 0 5px #000;*/
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.pcs-daily-heading-warning {
+    background-color: #f7b416;
+    color: black;
+}
+
+.pcs-daily-heading-good {
+    background-color: #21cc14;
+    color: white;
+}
+
+.pcs-daily-heading-error {
+    background-color: #ff0000;
+    color: white;
+}
+
+.pcs-daily-overview-content {
+    padding-top: 10px;
+    text-align: left;
+}
+
+.pcs-daily-overview-reasons li a {
+    color: black;
+    cursor: pointer;
+}
+
+/*CHARTS*/
+.chart-container {
+    text-align: center;
+    width: 125px;
+    height: 125px;
+    background-color: white;
+    margin: 0 auto;
+    /*float: left;*/
+}
+
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+/* TOP COMPLIANCE TABLE*/
+
+#top-compliance-table {
+    width: 100% !important;
+}
+
+    #top-compliance-table td {
+        border-right: solid 1px grey !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+        #top-compliance-table td:last-child {
+            border: none !important;
+        }
+
+span.date {
+    font-size: 12px;
+    color: grey;
+}
+
+
+
+
+/*REWORK TABLE*/
+
+.rework-recipe {
+    text-align: right !important;
+    width: 100px !important;
+    font-size: 12px !important;
+    padding-right: 6px !important;
+}
+
+
+#rework-compliance-table thead td {
+    border-right: solid 1px grey !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+#rework-compliance-table td:last-child {
+    border: none !important;
+}
+
+#rework-compliance-table td:first-child {
+    border: none !important;
+}
+
+#rework-compliance-table td:nth-child(even) {
+    border-left: solid 1px grey !important;
+}
+
+#rework-compliance-table tbody tr:nth-child(odd) {
+    background-color: #B8CCE4 !important;
+}
+
+#rework-compliance-table tbody tr:nth-child(even) {
+    background-color: #DBE5F1 !important;
+}
+
+#rework-compliance-table .rework-table-sub-heading {
+    font-weight: normal !important;
+    font-size: 12px !important;
+    background-color: #4F81BD !important;
+    color: white !important;
+}
+
+#rework-compliance-table tfoot {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+.rework-totals {
+    font-size: 12px !important;
+}
+/*#rework-compliance-table tfoot td:nth-child(odd){
+        border-left: solid 1px grey;
+    }
+        #rework-compliance-table tfoot td:first-child {
+            border-left: none;
+        }*/
+
+.week-selector {
+    font-size: 25px;
+}
+
+    .week-selector i:hover {
+        transform: scale(1.2);
+    }

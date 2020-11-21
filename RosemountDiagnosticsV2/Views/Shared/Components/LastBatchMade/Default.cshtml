@@ -1,0 +1,114 @@
+﻿@* LAST BATCH MADE VIEW COMPONANT *@
+
+@model BatchDataAccessLibrary.Models.BatchReport;
+@{
+    Layout = null;
+}
+<script src="~/lib/Guages.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/CreateGuage.css" rel="stylesheet" />
+@* HIDDEN FIELDS TO UPDATE CHARTS *@
+<div hidden id="lastbatch-visco-hidden"></div>
+<div hidden id="lastbatch-recipetype-hidden"></div>
+<div hidden id="lastbatch-batchId-hidden"></div>
+
+<div hidden id="IsSyncronising"></div>
+
+@* END OF HIDDEN FIELDS *@
+<table width="100%">
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <div id="lastbatch-recipe" class="recipe-title pad-left-10">@Model.Recipe<br /></div>
+                <div id="lastbatch-batchno" class="recipe-number pad-left-10">@Model.Campaign - @Model.BatchNo<br /></div>
+                <div id="lastbatch-maketime" class="recipe-time pad-left-10">@Model.MakingTime</div><br /><br />
+                <div id="lastbatch-viewbatch">
+                    <button type="button" id="btn-@Model.BatchReportId" class="btn btn-info btn-xs pad-left-10" onclick="location.href='@Url.Action("ViewSingleBatch", "BatchReports", new { batchId = @Model.BatchReportId })'">View Batch</button>
+                </div>
+            </td>
+
+            <td colspan="1" id="lastbatch-visco">
+
+                @await Component.InvokeAsync("CreateGuage", new { recipeType = Model.RecipeType, title = "Visco", value = Model.Visco, limitType = BatchDataAccessLibrary.Enums.LimitType.Visco, Height = 75, Width = 120 })
+
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><hr /></td>
+        </tr>
+
+        <tr class="text-center">
+            <td colspan="1" width="33%" class="recipe-details-header">Stoppages </td>
+            <td colspan="1" width="33%" class="recipe-details-header">Quality </td>
+            <td colspan="1" width="34%" class="recipe-details-header">Mat Var </td>
+        </tr>
+        <tr class="text-center">
+            <td class="recipe-details-info" id="lastbatch-stoppage">@ViewData["StoppagesTime"]</td>
+            <td class="recipe-details-info" id="lastbatch-quality">@ViewData["QualityIssues"]</td>
+            <td class="recipe-details-info" id="lastbatch-matvar">@ViewData["MatVarCost"]</td>
+        </tr>
+        <tr class="text-center">
+            <td class="recipe-details-subheading">Minutes</td>
+            <td class="recipe-details-subheading">issues</td>
+            <td class="recipe-details-subheading" id="lastbatch-gainorgive">Giveaway</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<script>
+    function AddObserver() {
+
+        var target = document.querySelector('#lastbatch-matvar');
+        var observer = new MutationObserver(function (mutations) {
+
+            if (target.textContent.startsWith("-")) {
+                target.classList.remove("negative");
+                target.classList.add("positive");
+                document.getElementById("lastbatch-gainorgive").innerHTML = "Gain";
+
+            }
+            else {
+                target.classList.remove("positive");
+                target.classList.add("negative");
+                document.getElementById("lastbatch-gainorgive").innerHTML = "Giveaway";
+            }
+            var sync = document.getElementById("IsSyncronising").innerHTML;
+            var isSync = (sync.toLowerCase() == 'true');
+
+            if (isSync == false) {
+                UpdateGuage();
+                UpdateButtonLink();
+                document.getElementById("lastbatch-recipe").classList.add("grow-shrink");
+
+                setTimeout(function () {
+                    document.getElementById("lastbatch-recipe").classList.remove("grow-shrink");
+                }, 1000);
+            }
+
+        });
+
+        var config = { attributes: false, childList: true, charactorData: true };
+        observer.observe(target, config);
+    }
+    AddObserver();
+
+    function UpdateGuage() {
+        var recipeType = parseInt(document.getElementById("lastbatch-recipetype-hidden").innerHTML)
+        var visco = document.getElementById("lastbatch-visco-hidden").innerHTML
+      
+        $("#lastbatch-visco").load("Home/CreateGuage", { recipetype: recipeType, guageTitle: "Visco", guageValue: visco, limitype: 0 });
+    }
+
+    function UpdateButtonLink() {
+        var lastBatchId = document.getElementById("lastbatch-batchId-hidden").innerHTML
+        $('#lastbatch-viewbatch').html('<button type="button" id="view-batch-btn" class="btn btn-info btn-xs pad-left-10">View Batch</button>');
+        $('#view-batch-btn').click(function () {
+            window.location.href = '@Url.Action("ViewSingleBatch", "BatchReports")' + '?batchId=' + lastBatchId;
+        })
+        }
+
+
+
+</script>

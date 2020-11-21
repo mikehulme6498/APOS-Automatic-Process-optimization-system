@@ -1,0 +1,52 @@
+﻿@model RosemountDiagnosticsV2.View_Models.Quality.PcsSummary
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="pcs-daily-overview" id="@Model.Date.DayOfWeek.ToString()">
+                <div class="pcs-daily-overview-title @Model.TitleColourClass">@Model.Title</div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="pcs-daily-overview-icon @Model.IconColourClass">
+                            <i class="@Model.Icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-7 offset-md-1">
+                        <div class="pcs-daily-overview-content">
+                            @if (Model.Percentage < 100)
+                            {
+                                @foreach (var parameter in Model.ParameterSummary)
+                                {
+                                    @if (parameter.Reasons.Count != 0)
+                                    {
+                                        <div class="pcs-daily-overview-heading">@parameter.Heading</div>
+                                        <div class="pcs-daily-overview-subheading">@parameter.Subheading</div>
+                                        <div class="pcs-daily-overview-reasons">
+                                            <button class="accordion"><span class="expand"><i class="fas fa-plus-circle"></i> View offending batches</span></button>
+                                            <div class="panel">
+                                                <ul>
+                                                    @foreach (var reason in parameter.Reasons)
+                                                    {
+
+                                                        <li>
+                                                            @reason.Key @reason.Value
+                                                            <a href='@Url.Action("ViewSingleBatchByNumber", "BatchReports", new { batchNum = reason.Key, year = Model.Date.Year })' target="_blank">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <h1>No Compliance Issues</h1>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

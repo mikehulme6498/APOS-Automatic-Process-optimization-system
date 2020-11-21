@@ -1,0 +1,174 @@
+﻿@model BatchDataAccessLibrary.Models.BatchReport
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BatchReport</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OriginalReport)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OriginalReport)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StreamName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StreamName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Recipe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Recipe)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Campaign)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Campaign)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BatchNo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BatchNo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekNo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeekNo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MakingTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MakingTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QATime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QATime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PreQaTemp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PreQaTemp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Visco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Visco)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ph)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ph)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SG)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SG)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Appearance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Appearance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VisualColour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VisualColour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MeasuredColour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MeasuredColour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Odour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Odour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OverallQAStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OverallQAStatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockTankAllocationTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockTankAllocationTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AllocatedTo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AllocatedTo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DropTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DropTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalRecipeWeight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalRecipeWeight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalActualWeight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalActualWeight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VesselWeightIncrease)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VesselWeightIncrease)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipeType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RecipeType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NewMakeTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NewMakeTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.BatchReportId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

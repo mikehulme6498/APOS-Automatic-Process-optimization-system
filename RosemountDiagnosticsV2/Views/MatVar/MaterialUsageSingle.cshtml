@@ -1,0 +1,228 @@
+﻿@model RosemountDiagnosticsV2.View_Models.MaterialUsageViewModel
+@{
+    ViewData["Title"] = $"Material Usage - {Model.ShortName}";
+}
+<link href="~/css/TableStyles.css" rel="stylesheet" />
+<link href="~/css/StreamInfoBox.css" rel="stylesheet" />
+<link href="~/css/MatVar/MatVarUsageSingle.css" rel="stylesheet" />
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="MatVar" asp-action="Index">Material Variance Menu</a></li>
+    <li><a asp-controller="MatVar" asp-action="Overview">Material Variance Overview</a></li>
+    <li>Material Usage @Model.ShortName</li>
+
+</ul>
+<div class="info-card">
+    <div class="info-card-heading">Date Selection</div>
+    <div class="info-card-content-alignLeft">
+        <div class="date-selection">
+            <h3>Showing Results From : @Model.DateSelectorModal.TimeFrameTitle
+            <button class="btn btn-primary btn-sm pull-right" data-target="#dateSelect" data-toggle="modal">Change Date</button></h3>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="info-card">
+            <div class="info-card-heading">@Model.ShortName Statistics </div>
+            <div class="info-card-content-alignLeft">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5><strong>Name on Report : </strong>@Model.Name</h5>
+                        <h5><strong>Code : </strong>@Model.ProductCode</h5>
+                        <h5><strong>Cost Per Ton : </strong>@Model.CostPerTon €</h5>
+                        <br />
+                        <br />
+                        <table id="totals-table">
+                            <tr>
+                                <td><h5>Total Batches :</h5></td>
+                                <td><h5>@Model.TotalBatchesMadeWithMaterial</h5></td>
+                            <tr>
+                                <td><h5>Total Used :</h5></td>
+                                <td><h5>@Model.PeriodTotalUsed.ToString("#,##0.00") Kg</h5></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Total @Model.GainLoss €  :</h5></td>
+                                <td><h5><number-formater value="@Model.PeriodTotalGainLossEuro" suffix="€" remove-negative-symbol="true"></number-formater></h5></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Total @Model.GainLoss Kg :</h5></td>
+                                <td><h5><number-formater value="@Model.PeriodTotalGainLossKg" suffix="Kg" remove-negative-symbol="true"></number-formater></h5></td>
+                            </tr>
+                            <tr>
+                                <td><h5>@Model.GainLoss Percentage :</h5></td>
+                                <td><h5><number-formater value="@Model.PercentageVariance" suffix="%" remove-negative-symbol="true"></number-formater></h5></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-8">
+                        <canvas id="myChart" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="info-card">
+                <div class="info-card-heading">Stream Breakdown</div>
+                <div class="info-card-content-alignCenter">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                                <div class="streamBoxes">
+                                    @foreach (var stream in Model.streamInfo)
+                                    {
+                                        <stream-info-box stream-name="@stream.StreamName" loss-info="@stream.LossInfo" loss-type="@stream.LossType" occurances="@stream.Occurances" percentage="@stream.Percentage"></stream-info-box>
+                                    }
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="info-card">
+                <div class="info-card-heading">Usage Per Week - @Model.ShortName</div>
+                <div class="info-card-content-alignCenter">
+                    <table class="table table-striped table-responsive blue-table" id="usage-table">
+                        <thead>
+                            <tr>
+                                <td>Week</td>
+                                <td>Target (Kg)</td>
+                                <td>Actual (Kg)</td>
+                                <td>Taget €</td>
+                                <td>Actual €</td>
+                                <td>Giveaway / Gain (Kg)</td>
+                                <td>Giveaway / Gain (€)</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var week in @Model.WeeklyUsage.OrderByDescending(x => x.WeekNo))
+                            {
+                            <tr id="@week.WeekNo">
+
+                                <td>@week.WeekNo</td>
+                                <td>@week.Target.ToString("#,##0.00")</td>
+                                <td>@week.Actual.ToString("#,##0.00")</td>
+                                <td>@week.TargetCost.ToString("#,##0.00")</td>
+
+                                <td>@week.ActualCost.ToString("#,##0.00")</td>
+                                <number-formater value="@week.GiveawayGainKg" suffix="Kg" tag-name="td"></number-formater>
+                                <number-formater value="@week.GiveawayGainEuro" suffix="€" tag-name="td"></number-formater>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DATE SELECTOR MODAL-->
+
+@using (Html.BeginForm("MaterialUsage", "MatVar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" asp-for="Name" value="@Model.Name" />
+    @*<input type="hidden" asp-for="DateSelectorModal.Year" />
+        <input type="hidden" asp-for="DateSelectorModal.TimeFrame" />
+        <input type="hidden" asp-for="DateSelectorModal.TimeFrameTitle" />*@
+    @await Component.InvokeAsync("DateSelector", Model.DateSelectorModal)
+}
+
+<!-- END DATE SELECTOR MODAL-->
+
+
+
+
+
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script>
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var target = [];
+    var actual = [];
+    var weeks = [];
+
+
+     @foreach (var week in @Model.WeeklyUsage)
+     {
+        @:weeks.push(@week.WeekNo)
+        @:target.push(@week.Target)
+        @:actual.push(@week.Actual)
+     }
+
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: weeks,
+            datasets: [{
+                label: 'Actual Weight',
+                backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                borderColor: 'rgb(255, 99, 132)',
+                fill: false,
+                display: true,
+                data: actual
+            }, {
+                label: 'Target Weight',
+                backgroundColor: 'rgba(0, 0, 255, 1)',
+                borderColor: 'rgb(0, 0, 255)',
+                fill: false,
+                display: true,
+                data: target,
+                type: 'bar'
+                }
+            ]
+        },
+        // Configuration options go here
+        options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return Number(tooltipItem.yLabel) + " Weight (Kg)";
+                    }
+                }
+         },
+         scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Weight (kg)'
+              }
+                }],
+              xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Week No'
+              }
+            }]
+          } }
+    });
+
+
+    </script>
+}

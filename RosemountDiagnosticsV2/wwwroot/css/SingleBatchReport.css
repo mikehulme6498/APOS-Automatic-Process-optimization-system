@@ -1,0 +1,172 @@
+﻿/* NEW STUFF */
+
+#batch-info-table tr td:nth-child(odd){
+    font-weight:bold;
+    text-align:right;
+    padding-right: 10px;
+    font-size:18px;
+    color:midnightblue;
+}
+
+#batch-info-table tr td:nth-child(even) {
+    text-align: left;
+    font-size: 18px;
+}
+
+.issue-table {
+    border-bottom: solid 1px #EFEFEF;
+    margin-top: 10px;
+    width: 100%;
+    background-color: white;
+    font-size: 16px;
+}
+
+.issue-table td:nth-child(even){
+    padding-left: 15px;
+}
+
+.issue-table .icon{
+    padding-left:10px;
+    padding-top: 10px;
+    text-align:center;
+    width:40px;
+}
+
+.issue-table .material-title{
+    font-weight:bold;
+   
+}
+
+.issue-table .reason{
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size:18px;
+}
+
+.issue-table .lossTime{
+    text-align:right;
+    font-weight:bold;
+    padding-bottom: 10px;
+    padding-right:10px;
+}
+
+
+@media (max-width: 990px) {
+    .guageBox {
+        border-top: 2px solid #EFEFEF;
+        margin-top: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #batch-info-table{
+    margin:auto;
+    }
+
+}
+
+
+
+
+#viscoValue::after {
+    content: " cP";
+}
+
+#makeTimeValue::after{
+    content: " Minutes"
+}
+
+/*.right-align{
+    color:grey !important;
+    font-size:small !important;
+}
+
+.left-align {
+    color: black !important;
+    font-size: medium !important;
+}*/
+.well {
+    text-align: center !important;
+}
+
+.box-heading {
+    text-align: center !important;
+    font-size: medium !important;
+    font-weight: bold !important;
+    color: black !important;
+}
+
+.box-content {
+    text-align: center !important;
+    font-size: x-large !important;
+    font-weight: bold !important;
+    color: lightslategrey !important;
+}
+
+.well-top {
+    height: 120px !important;
+}
+
+.QaData{
+    margin-left:15%;
+}
+
+/*View single batch */
+
+.batchInfo{
+    width:100% !important;
+}
+.batchInfo td {
+    table-layout: fixed !important;
+    text-align: center !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    vertical-align: middle !important;
+    width: auto !important;
+}
+
+.batchInfo tr:nth-child(odd) {
+    background-color: #b8cce4 !important;
+}
+
+.batchInfo tr:nth-child(even) {
+    background-color: #dbe5f1 !important;
+}
+
+.batchInfo thead td {
+    background-color: #4f81bd !important;
+}
+
+.left-align {
+    text-align: left !important;
+    padding-left: 10px !important;
+}
+
+.right-align {
+    font-weight: bold !important;
+    text-align: right !important;
+}
+
+/* TOOLTIP FOR TABLE CELLS */
+
+.parentCell {
+    position: relative;
+}
+
+.cell-tooltip {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    border: 1px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 3px;
+    color: black;
+    top: 30px;
+    left: 20px;
+}
+
+.parentCell:hover span.cell-tooltip {
+    display: block;
+    cursor:help;
+} 

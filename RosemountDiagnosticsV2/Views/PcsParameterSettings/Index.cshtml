@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BatchDataAccessLibrary.Models.PcsWeightParameters>
+
+@{
+    ViewData["Title"] = "PCS Parameters";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li>Add / Remove Pcs Parameters</li>
+</ul>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="info-card">
+                <div class="info-card-heading">Add / Remove Parameters for daily PCS Compliance</div>
+                <div class="info-card-content-alignLeft">
+
+                    <br /><br />
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="100px">
+                                    @Html.DisplayNameFor(model => model.RecipeType)
+                                </th>
+                                <th width="200px">
+                                    @Html.DisplayNameFor(model => model.Parameter)
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecipeType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Parameter)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Delete" asp-route-id="@item.PcsWeightParametersId" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <div class="footer-right">
+                        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus-circle"></i><span class="font-18"> New Parameter</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

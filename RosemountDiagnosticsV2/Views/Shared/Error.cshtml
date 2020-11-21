@@ -1,0 +1,14 @@
+﻿@if (ViewBag.ErrorTitle == null)
+{
+    <h3>
+        An error occured while processing your request...
+    </h3>
+    <h5>
+        Please contact mike.hulme@unilever.com for support.
+    </h5>
+}
+else
+{
+    <h1 class="text-danger">@ViewBag.ErrorTitle</h1>
+    <h6 class="text-danger">@ViewBag.ErrorMessage</h6>
+}

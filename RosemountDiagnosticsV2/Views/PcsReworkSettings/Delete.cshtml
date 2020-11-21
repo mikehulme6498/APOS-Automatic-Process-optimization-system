@@ -1,0 +1,45 @@
+﻿@model BatchDataAccessLibrary.Models.PcsReworkParameters
+@{
+    ViewData["Title"] = "Delete PCS Rework Parameter";
+}
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="PcsReworkSettings" asp-action="Index">Remove Rework Recipes</a></li>
+    <li>Delete Rework Parameter</li>
+</ul>
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="info-card">
+            <div class="info-card-heading">Are you sure you want to delete this?</div>          
+            <div class="info-card-content-alignLeft">
+                <div>
+                    <dl>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RecipeName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RecipeName)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TargetReworkAmount)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.TargetReworkAmount)
+                        </dd>
+                    </dl>
+                    <div class="footer-right">
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="PcsReworkParametersId" />
+                            <a asp-action="Index" class="btn btn-info">Back to List</a>
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

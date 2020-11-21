@@ -1,0 +1,101 @@
+﻿@model List<BatchDataAccessLibrary.Models.BatchReport>
+
+@{
+    ViewData["Title"] = "Upload Results";
+}
+
+<br />
+<ul class="breadcrumb">
+    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-controller="Settings" asp-action="Index">Settings</a></li>
+    <li><a asp-controller="UploadData" asp-action="Index">Upload New Batch Reports</a></li>
+    <li>Upload Results</li>
+</ul>
+
+@if (Convert.ToInt32(ViewData["goodBatches"]) >= 1)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        You uploaded @ViewData["totalBatches"] batch reports.<hr /> @ViewData["goodBatches"] were succesfully added to the database.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times</span>
+        </button>
+    </div>
+}
+
+@if (Convert.ToInt32(ViewData["badBatches"]) >= 1)
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        However @ViewData["badBatches"] failed to convert for upload. Each failed upload is listed below with the reasons.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times</span>
+        </button>
+    </div>
+}
+
+@if (Convert.ToInt32(ViewData["badBatches"]) > 0)
+{
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="info-card">
+                <div class="info-card-heading">Files Which Could Not Be Converted Or Uploaded</div>
+                <div class="info-card-content-alignLeft">
+                    <table id="bad" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Campaign</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var report in Model)
+                            {
+                                <tr>
+                                    @if (!report.IsValidBatch)
+                                    {
+                                        <td>Failed</td>
+                                        <td>@report.Campaign-@report.BatchNo</td>
+                                        <td>
+                                            <ul>
+                                                @foreach (var item in report.ConversionFaults)
+                                                {
+                                                    <li>@item.Message</li>
+                                                }
+
+                                            </ul>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="info-card-footer footer-right">
+                    <a asp-action="ViewAllBatches" asp-controller="BatchReports" class="btn btn-primary">View All Batches</a>
+                    <a asp-action="Index" asp-controller="UploadData" class="btn btn-primary">Upload More Batches</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="info-card">
+                <div class="info-card-heading">Success</div>
+                <div class="info-card-content-alignLeft">
+                    <h3>All files were converted and uploaded sucessfully. <span class="fas fa-check-circle positive"></span></h3>
+                </div>
+                <div class="info-card-footer footer-right">
+                    <a asp-action="ViewAllBatches" asp-controller="BatchReports" class="btn btn-primary">View All Batches</a>
+                    <a asp-action="Index" asp-controller="UploadData" class="btn btn-primary">Upload More Batches</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
