@@ -5,7 +5,7 @@ This application reads the text file reports produced by the system and converts
 
 #### Video Demo
 
-[![Watch the video](http://mikehulme.co.uk/Images/APOSYouTube2.png)](https://www.youtube.com/watch?v=L8itBSK1z_c&t=70s&ab_channel=MikeHulme)
+[![Watch the video](http://mikehulme.co.uk/Images/APOSYouTube2.png)](https://www.youtube.com/watch?v=8UuJjG11PVg&ab_channel=MikeHulme)
 
 
 ## Program Usage
