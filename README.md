@@ -13,7 +13,7 @@ This application reads the text file reports produced by the system and converts
 If you wish to use the program please note I have removed some features due to sensitivity. I have also chnaged the program to store data in memory rather than a database
 to make it easier for you to use.
 
-You can download demo batch reports to put into the system here http://mikehulme.co.uk/DemoDatabases/DemoReports/Reports.zip
+You can download demo batch reports to put into the system here http://mikehulme.co.uk/DemoReports/Reports.zip
 
 Once you have the program running you can upload them by going into settings - Upload new batch reports
 
